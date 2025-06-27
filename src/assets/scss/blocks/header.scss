@@ -1,10 +1,14 @@
+@use "../global/variables" as *;
+
 .header {
     padding: 24px 0;
 
     &__wrapper {
-        display: flex;
-        gap: 20px;
+        display: grid;
+        gap: 80px;
+        grid-template-columns: 144px 1fr 69px;
         justify-content: space-between;
+        align-items: center;
     }
 
     &__main {
@@ -16,5 +20,23 @@
     &__link {
         font-size: 24px;
         line-height: 32px;
+        position: relative;
+
+        &::after {
+            content: "";
+            width: 100%;
+            height: 1.5px;
+            background-color: $color-magenta;
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            display: none;
+        }
+
+        &.router-link-active{
+            &::after {
+                display: block;
+            }
+        }
     }
 }

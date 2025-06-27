@@ -2,6 +2,7 @@
 
 .custom-input {
     position: relative;
+    width: 100%;
 
     &__field {
         border: none;
@@ -22,5 +23,14 @@
         // &:focus-visible {
         //     border-color: $color-royal-blue-1;
         // }
+    }
+
+    &__search-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $color-white-50;
+        pointer-events: none;
     }
 }
