@@ -24,6 +24,5 @@
         <RouterLink class="header__link" to="/auth">Войти</RouterLink>
       </div>
     </div>
-    <RouterView />
   </header>
 </template>

@@ -1,0 +1,60 @@
+@use '../global/variables' as *;
+
+.movie-card {
+  display: grid;
+  grid-template-columns: 1fr 680px;
+  align-items: center;
+
+  &__labels {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin: 0 0 16px;
+  }
+
+  &__rating {
+    display: flex;
+    gap: 4px;
+    padding: 8px 12px;
+    background-color: $color-tropical-forest-green;
+    border-radius: 16px;
+    align-items: center;
+  }
+
+  &__rating-number {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  &__year,
+  &__genres,
+  &__runtime {
+    font-size: 18px;
+    line-height: 24px;
+    color: $color-white-70;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 56px;
+    margin: 0 0 16px;
+  }
+
+  &__plot {
+    color: $color-white-70;
+    margin: 0 0 60px;
+  }
+
+  &__btns {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  &__image {
+    object-fit: contain;
+    height: 552px;
+  }
+}

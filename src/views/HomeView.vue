@@ -1,9 +1,11 @@
 <script setup lang="ts">
-// import TheWelcome from '../components/TheWelcome.vue'
+import RandomMovie from '../components/RandomMovie.vue';
 </script>
 
 <template>
   <main>
-    <h1>HOME</h1>
+    <div class="container">
+      <RandomMovie />
+    </div>
   </main>
 </template>
