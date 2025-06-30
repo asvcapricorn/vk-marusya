@@ -1,17 +1,24 @@
 <script setup lang="ts">
+import AppLoader from './AppLoader.vue';
 import type { IMovie } from '../types/movie'
 import { GENRE_MAP } from '@/constants/genres';
 
-const props = defineProps<{ movie: IMovie | null }>()
+defineProps<{ movie: IMovie | null }>();
 
-type GenreKey = keyof typeof GENRE_MAP;
+const getTranslatedGenres = (genres: string[] | undefined) => {
+  if (!genres) return '';
+  return genres
+    .map(genre => GENRE_MAP[genre as keyof typeof GENRE_MAP] || genre)
+    .join(', ')
+};
 
-const translateGenres = (genres: GenreKey[]) => genres.map(genre => GENRE_MAP[genre] || genre);
-
+const getHoursAndMinutes = (minutes: number | undefined) => {
+  return minutes ? `${Math.floor(minutes / 60)} ч ${minutes % 60} мин` : '';
+}
 </script>
 
 <template>
-  <div class="movie-card">
+  <div class="movie-card" v-if="movie">
     <div class="movie-card__content">
       <span class="movie-card__labels">
         <span class="movie-card__rating">
@@ -21,8 +28,9 @@ const translateGenres = (genres: GenreKey[]) => genres.map(genre => GENRE_MAP[ge
           <span class="movie-card__rating-number">{{ movie?.tmdbRating || 'no rating' }}</span>
         </span>
         <span class="movie-card__year">{{ movie?.releaseYear }}</span>
-        <span class="movie-card__genres">{{ translateGenres(movie?.genres) }}</span>
-        <span class="movie-card__runtime">{{ movie?.runtime }}</span>
+        <span class="movie-card__genres"> {{ getTranslatedGenres(movie?.genres) }}
+        </span>
+        <span class="movie-card__runtime">{{ getHoursAndMinutes(movie?.runtime) }}</span>
       </span>
       <h1 class="movie-card__title">{{ movie?.title }}</h1>
       <p class="movie-card__plot">{{ movie?.plot }}</p>
@@ -43,4 +51,5 @@ const translateGenres = (genres: GenreKey[]) => genres.map(genre => GENRE_MAP[ge
     </div>
     <img class="movie-card__image" :src="movie?.posterUrl" height="552" width="680" alt="Постер фильма">
   </div>
+  <AppLoader v-else />
 </template>

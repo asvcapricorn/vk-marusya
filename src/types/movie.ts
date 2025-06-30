@@ -1,6 +1,3 @@
-// import { GENRE_MAP } from '@/constants/genres'
-// type GenreKey = keyof typeof GENRE_MAP
-
 export interface IMovie {
   id: number
   title: string

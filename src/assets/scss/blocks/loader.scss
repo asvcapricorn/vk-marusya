@@ -1,0 +1,33 @@
+@use '../global/variables' as *;
+
+.loader {
+  position: fixed;
+  background-color: #282828;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  opacity: 1;
+
+  &__logo {
+    width: 150px;
+    height: 150px;
+    animation: logoRotate 2s ease 3;
+    color: $color-magenta;
+  }
+}
+
+@keyframes logoRotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
