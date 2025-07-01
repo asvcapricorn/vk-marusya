@@ -14,6 +14,22 @@ const getTranslatedGenres = (genres: string[] | undefined) => {
 
 const getHoursAndMinutes = (minutes: number | undefined) => {
   return minutes ? `${Math.floor(minutes / 60)} ч ${minutes % 60} мин` : '';
+};
+
+const getRating = (rating: number | undefined) => {
+  if (!rating) {
+    return 'movie-card__rating--bad';
+  }
+  if (rating > 8.4) {
+    return 'movie-card__rating--excellent';
+  }
+  if (rating > 6.9) {
+    return 'movie-card__rating--good';
+  }
+  if (rating > 4.9) {
+    return 'movie-card__rating--poor';
+  }
+  return 'movie-card__rating--bad';
 }
 </script>
 
@@ -21,35 +37,37 @@ const getHoursAndMinutes = (minutes: number | undefined) => {
   <div class="movie-card" v-if="movie">
     <div class="movie-card__content">
       <span class="movie-card__labels">
-        <span class="movie-card__rating">
+        <span class="movie-card__rating" :class="getRating(movie?.tmdbRating)">
           <svg class="movie-card__rating-icon" width="16" height="16" aria-hidden="true">
             <use xlink:href="@/assets/images/sprite.svg#icon-star"></use>
           </svg>
-          <span class="movie-card__rating-number">{{ movie?.tmdbRating || 'no rating' }}</span>
+          <span class="movie-card__rating-number">{{ movie?.tmdbRating.toFixed(1)
+            || '0.0' }}</span>
         </span>
         <span class="movie-card__year">{{ movie?.releaseYear }}</span>
         <span class="movie-card__genres"> {{ getTranslatedGenres(movie?.genres) }}
         </span>
         <span class="movie-card__runtime">{{ getHoursAndMinutes(movie?.runtime) }}</span>
       </span>
-      <h1 class="movie-card__title">{{ movie?.title }}</h1>
+      <h2 class="movie-card__title">{{ movie?.title }}</h2>
       <p class="movie-card__plot">{{ movie?.plot }}</p>
       <div class="movie-card__btns">
-        <button class="btn" type="button">Трейлер</button>
-        <a class="btn">О фильме</a>
-        <button class="btn">
-          <svg class="movie-card__rating-icon" width="16" height="16" aria-hidden="true">
-            <use xlink:href="@/assets/images/sprite.svg#icon-star"></use>
+        <button class="btn btn--primary" type="button">Трейлер</button>
+        <button class="btn btn--secondary" type="button">О фильме</button>
+        <button class="btn btn--secondary btn--icon" type="button">
+          <svg class="movie-card__rating-icon" width="24" height="24" aria-hidden="true">
+            <use xlink:href="@/assets/images/sprite.svg#icon-fav"></use>
           </svg>
         </button>
-        <button class="btn">
+        <button class="btn btn--secondary btn--icon" type="button">
           <svg class="movie-card__rating-icon" width="24" height="24" aria-hidden="true">
-            <use xlink:href="@/assets/images/sprite.svg#icon-search"></use>
+            <use xlink:href="@/assets/images/sprite.svg#icon-refresh"></use>
           </svg>
         </button>
       </div>
     </div>
-    <img class="movie-card__image" :src="movie?.posterUrl" height="552" width="680" alt="Постер фильма">
+    <img class="movie-card__image" :src="movie?.posterUrl" height="552" width="680" alt="Постер фильма"
+      v-if="movie.posterUrl">
   </div>
   <AppLoader v-else />
 </template>

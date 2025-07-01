@@ -15,10 +15,10 @@
           <RouterLink class="header__link" to="/">Главная</RouterLink>
           <RouterLink class="header__link" to="/genres">Жанры</RouterLink>
           <div class="custom-input">
+            <input class="custom-input__field" name="search" id="search" type="text" placeholder="Поиск">
             <svg class="custom-input__search-icon" width="24" height="24" aria-hidden="true">
               <use xlink:href="@/assets/images/sprite.svg#icon-search"></use>
             </svg>
-            <input class="custom-input__field" name="search" id="search" type="text" placeholder="Поиск">
           </div>
         </div>
         <RouterLink class="header__link" to="/auth">Войти</RouterLink>

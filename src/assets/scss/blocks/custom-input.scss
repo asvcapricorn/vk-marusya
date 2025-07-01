@@ -1,36 +1,53 @@
-@use "../global/variables" as *;
+@use '../global/variables' as *;
 
 .custom-input {
-    position: relative;
+  $root: &;
+  position: relative;
+  width: 100%;
+
+  &--error {
+    #{$root}__field {
+      border-color: $color-embarrassment;
+    }
+
+    #{$root}__search-icon {
+      color: $color-embarrassment;
+    }
+  }
+
+  &:not(&--error) {
+    #{$root}__field {
+      &:hover,
+      &:focus-visible {
+        border-color: $color-winterspring-lilac;
+
+        ~ #{$root}__search-icon {
+          color: $color-winterspring-lilac;
+        }
+      }
+    }
+  }
+
+  &__field {
+    border: 1px solid $color-onyx;
+    border-radius: 8px;
+    padding: 11px 15px 11px 51px;
     width: 100%;
+    outline: none;
+    font-size: 18px;
+    line-height: 24px;
+    background-color: $color-onyx;
+    color: $color-white;
+    transition: border-color $transition-80;
+  }
 
-    &__field {
-        border: none;
-        border-radius: 8px;
-        padding: 12px 16px 12px 52px;
-        width: 100%;
-        outline: none;
-        font-size: 18px;
-        line-height: 24px;
-        background-color: $color-onyx;
-        color: $color-white;
-
-
-        // &:hover {
-        //     border-color: $color-manatee;
-        // }
-
-        // &:focus-visible {
-        //     border-color: $color-royal-blue-1;
-        // }
-    }
-
-    &__search-icon {
-        position: absolute;
-        left: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: $color-white-50;
-        pointer-events: none;
-    }
+  &__search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-white-50;
+    pointer-events: none;
+    transition: color $transition-80;
+  }
 }

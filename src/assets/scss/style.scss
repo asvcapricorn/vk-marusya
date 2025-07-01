@@ -3,9 +3,16 @@
 @use 'global/fonts';
 @use 'global/reboot';
 @use 'global/container';
+@use 'global/visually-hidden';
 
 /* Blocks */
+@use 'blocks/btn';
 @use 'blocks/header';
 @use 'blocks/custom-input';
+@use 'blocks/random-movie';
 @use 'blocks/movie-card';
 @use 'blocks/loader';
+@use 'blocks/top';
+@use 'blocks/top-movie-card';
+@use 'blocks/footer';
+@use 'blocks/socials';

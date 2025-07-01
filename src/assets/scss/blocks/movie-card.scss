@@ -16,9 +16,24 @@
     display: flex;
     gap: 4px;
     padding: 8px 12px;
-    background-color: $color-tropical-forest-green;
     border-radius: 16px;
     align-items: center;
+
+    &--excellent {
+      background-color: $color-rating-excellent;
+    }
+
+    &--good {
+      background-color: $color-rating-good;
+    }
+
+    &--poor {
+      background-color: $color-rating-poor;
+    }
+
+    &--bad {
+      background-color: $color-rating-bad;
+    }
   }
 
   &__rating-number {

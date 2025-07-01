@@ -1,0 +1,23 @@
+@use '../global/variables.scss' as *;
+
+.top-movie-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0px 0px 80px 0px $color-white-33;
+  border: 1px solid $color-white-25;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__image {
+    width: 224px;
+    height: 336px;
+  }
+
+  &__icon {
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -13,7 +13,7 @@ body {
   color: $color-white;
   margin: 0;
   padding: 0;
-  background-color: #282828;
+  background-color: $color-fog-of-war;
   display: flex;
   flex-direction: column;
   min-height: 100vh;

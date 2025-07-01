@@ -5,6 +5,7 @@ import MovieCard from './MovieCard.vue';
 import type { IMovie } from '../types/movie';
 
 const movie = ref<IMovie | null>(null);
+
 const getRandomMovie = async (): Promise<void> => {
   try {
     const resp = await api.get('/movie/random');
@@ -18,5 +19,7 @@ onMounted(getRandomMovie);
 
 </script>
 <template>
-  <MovieCard :movie=movie />
+  <div class="random-movie">
+    <MovieCard :movie=movie />
+  </div>
 </template>
