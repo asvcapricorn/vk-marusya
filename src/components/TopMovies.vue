@@ -10,7 +10,6 @@ const getTop10 = async (): Promise<void> => {
     try {
         const resp = await api.get('/movie/top10');
         topMovies.value = await resp.data;
-        console.log(topMovies.value);
     } catch (err) {
         throw new Error('top 10 movies response was not ok')
     }

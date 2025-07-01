@@ -1,12 +1,8 @@
 @use '../global/variables' as *;
 
 .loader {
-  position: fixed;
-  background-color: #282828;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  background-color: $color-fog-of-war;
+  height: calc(100vh - 96px - 32px);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -18,7 +14,7 @@
   &__logo {
     width: 150px;
     height: 150px;
-    animation: logoRotate 2s ease 3;
+    animation: logoRotate 2s ease 10;
     color: $color-magenta;
   }
 }
