@@ -19,6 +19,11 @@ body {
   min-height: 100vh;
 }
 
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
 main {
   padding: 32px 0 0 0;
   flex-grow: 1;

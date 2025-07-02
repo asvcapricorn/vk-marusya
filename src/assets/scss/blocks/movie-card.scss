@@ -61,6 +61,12 @@
     }
   }
 
+  &--view {
+    .btn--random {
+      display: none;
+    }
+  }
+
   &__labels {
     display: flex;
     gap: 16px;
@@ -127,5 +133,11 @@
   &__image {
     object-fit: contain;
     height: 552px;
+  }
+
+  &__icon {
+    height: 300px;
+    width: 300px;
+    place-self: center;
   }
 }

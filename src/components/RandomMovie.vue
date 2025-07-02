@@ -13,13 +13,13 @@ const getRandomMovie = async (): Promise<void> => {
   } catch (err) {
     throw new Error('random movie response was not ok')
   }
-}
+};
 
 onMounted(getRandomMovie);
 
 </script>
 <template>
   <div class="random-movie">
-    <MovieCard :movie=movie />
+    <MovieCard :movie=movie @refreshMovie="getRandomMovie" />
   </div>
 </template>

@@ -1,0 +1,44 @@
+@use '../global/variables.scss' as *;
+
+.movie-view {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &__title {
+    margin: 0 0 64px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    width: 328px;
+  }
+
+  &__label {
+    margin: 0 8px 0 0;
+  }
+
+  &__dots {
+    flex-grow: 1;
+    border-bottom: 1px dashed $color-white-50;
+    height: 1px;
+    align-self: end;
+    position: relative;
+    bottom: 6px;
+  }
+}
