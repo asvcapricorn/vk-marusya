@@ -1,0 +1,33 @@
+@use '../global/variables.scss' as *;
+
+.search-form {
+  width: 100%;
+  position: relative;
+
+  &__results {
+    padding: 8px;
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 85%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    background-color: $color-onyx;
+    border-radius: 8px;
+    z-index: 10;
+
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+      opacity $transition-300,
+      transform $transition-300;
+    pointer-events: none;
+
+    &.search-form__results--show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+  }
+}

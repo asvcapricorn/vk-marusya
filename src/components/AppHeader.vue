@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import api from '@/services/api';
-import type { IMovie } from '../types/movie'
+import type { IMovie } from '../types/movie';
+import SearchForm from './SearchForm.vue';
 
 const search = ref('');
+const searchResults = ref<IMovie[]>([]);
 
 interface IResponseMovies {
   movies: IMovie[]
@@ -11,7 +13,11 @@ interface IResponseMovies {
 
 const getMovies = async (title: string): Promise<IResponseMovies> => {
   try {
-    const resp = await api.get(`/movie?title=${title}`);
+    const query = new URLSearchParams({
+      title: title,
+      count: String(5)
+    })
+    const resp = await api.get(`/movie?${query}`);
     const movies = await resp.data;
     console.log('movies', movies);
 
@@ -23,9 +29,13 @@ const getMovies = async (title: string): Promise<IResponseMovies> => {
   }
 };
 
-watch(search, () => {
-  console.log('search', search.value);
-  getMovies(search.value);
+watch(search, async (newVal) => {
+  if (newVal.length > 2) {
+    const response = await getMovies(newVal);
+    searchResults.value = response.movies;
+  } else {
+    searchResults.value = [];
+  }
 });
 </script>
 
@@ -42,13 +52,7 @@ watch(search, () => {
         <div class="header__main">
           <RouterLink class="header__link" to="/">Главная</RouterLink>
           <RouterLink class="header__link" to="/genres">Жанры</RouterLink>
-          <div class="custom-input">
-            <input class="custom-input__field" name="search" id="search" type="text" placeholder="Поиск"
-              v-model="search">
-            <svg class="custom-input__search-icon" width="24" height="24" aria-hidden="true">
-              <use xlink:href="@/assets/images/sprite.svg#icon-search"></use>
-            </svg>
-          </div>
+          <SearchForm v-model="search" :searchResults="searchResults" />
         </div>
         <RouterLink class="header__link" to="/auth">Войти</RouterLink>
       </div>

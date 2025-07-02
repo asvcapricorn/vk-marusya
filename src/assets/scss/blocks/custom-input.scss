@@ -31,7 +31,7 @@
   &__field {
     border: 1px solid $color-onyx;
     border-radius: 8px;
-    padding: 11px 15px 11px 51px;
+    padding: 11px 51px;
     width: 100%;
     outline: none;
     font-size: 18px;
@@ -49,5 +49,29 @@
     color: $color-white-50;
     pointer-events: none;
     transition: color $transition-80;
+  }
+
+  &__btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+    outline: none;
+    color: $color-white-50;
+    background-color: transparent;
+
+    &:hover,
+    &:focus-visible {
+      color: $color-winterspring-lilac;
+    }
   }
 }

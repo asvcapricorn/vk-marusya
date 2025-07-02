@@ -3,7 +3,14 @@ import AppLoader from './AppLoader.vue';
 import type { IMovie } from '../types/movie'
 import { GENRE_MAP } from '@/constants/genres';
 
-defineProps<{ movie: IMovie | null }>();
+defineProps<{ movie: IMovie | null, forSearch?: boolean }>();
+
+const getCardClass = (forSearch: boolean | undefined) => {
+  if (forSearch) {
+    return 'movie-card--search';
+  }
+  return;
+}
 
 const getTranslatedGenres = (genres: string[] | undefined) => {
   if (!genres) return '';
@@ -16,7 +23,7 @@ const getHoursAndMinutes = (minutes: number | undefined) => {
   return minutes ? `${Math.floor(minutes / 60)} ч ${minutes % 60} мин` : '';
 };
 
-const getRating = (rating: number | undefined) => {
+const getRatingClass = (rating: number | undefined) => {
   if (!rating) {
     return 'movie-card__rating--bad';
   }
@@ -30,14 +37,15 @@ const getRating = (rating: number | undefined) => {
     return 'movie-card__rating--poor';
   }
   return 'movie-card__rating--bad';
-}
+};
+
 </script>
 
 <template>
-  <div class="movie-card" v-if="movie">
+  <div class="movie-card" :class="getCardClass(forSearch)" v-if="movie">
     <div class="movie-card__content">
       <span class="movie-card__labels">
-        <span class="movie-card__rating" :class="getRating(movie?.tmdbRating)">
+        <span class="movie-card__rating" :class="getRatingClass(movie?.tmdbRating)">
           <svg class="movie-card__rating-icon" width="16" height="16" aria-hidden="true">
             <use xlink:href="@/assets/images/sprite.svg#icon-star"></use>
           </svg>
