@@ -73,6 +73,7 @@ const getRatingClass = (rating: number | undefined) => {
     <svg class="movie-card__icon" width="16" height="16" aria-hidden="true" v-else>
       <use xlink:href="@/assets/images/sprite.svg#icon-movie"></use>
     </svg>
+    <RouterLink class="movie-card__link-search" :to="`/movie/${movie?.id}`"></RouterLink>
   </div>
   <AppLoader v-else />
 </template>

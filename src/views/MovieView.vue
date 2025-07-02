@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import api from '@/services/api';
 import MovieCard from '@/components/MovieCard.vue';
@@ -16,7 +16,14 @@ const getMovie = async (movieId: string): Promise<void> => {
     }
 };
 
-onMounted(() => getMovie(route.params.movieId as string));
+onMounted(() => {
+    getMovie(route.params.movieId as string);
+});
+
+watch(() => route.params.movieId, (newId) => {
+    getMovie(newId as string);
+});
+
 
 </script>
 

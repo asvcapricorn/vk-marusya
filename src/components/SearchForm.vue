@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue';
 import type { IMovie } from '../types/movie';
 import MovieCard from './MovieCard.vue';
 
-defineProps<{ modelValue: string, searchResults: IMovie[] | null }>();
+const props = defineProps<{ modelValue: string, searchResults: IMovie[] | null }>();
 const emit = defineEmits(['update:modelValue']);
+
+// const foo = ref();
+
 </script>
 
 <template>
@@ -22,7 +26,7 @@ const emit = defineEmits(['update:modelValue']);
             </button>
         </div>
         <ul class="search-form__results"
-            :class="{ 'search-form__results--show': searchResults && searchResults.length }">
+            :class="{ 'search-form__results--show': searchResults && searchResults.length > 0 }">
             <li class="search-form__result" v-for="movie in searchResults">
                 <MovieCard :movie=movie :for-search="true" />
             </li>

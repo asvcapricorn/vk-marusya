@@ -43,7 +43,7 @@ watch(search, async (newVal) => {
   <header class="header">
     <div class="container">
       <div class="header__wrapper">
-        <RouterLink class="header__logo" to="/" exact>
+        <RouterLink class="header__logo" to="/">
           <picture class="header__picture">
             <img class="header__image" src="@/assets/images/logo.png" srcset="@/assets/images/logo@2x.png 2x"
               height="32" width="144" alt="Логотип">
