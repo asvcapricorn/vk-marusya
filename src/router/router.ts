@@ -24,6 +24,9 @@ const router = createRouter({
       component: () => import('../views/MovieView.vue'),
     },
   ],
+  scrollBehavior() {
+    return { top: 0, behavior: 'smooth' }
+  },
 })
 
 export default router

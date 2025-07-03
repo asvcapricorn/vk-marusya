@@ -19,7 +19,7 @@ onMounted(getRandomMovie);
 
 </script>
 <template>
-  <div class="random-movie">
+  <section class="random-movie">
     <MovieCard :movie=movie @refreshMovie="getRandomMovie" />
-  </div>
+  </section>
 </template>

@@ -9,7 +9,7 @@ const emit = defineEmits(['refreshMovie']);
 const getTranslatedGenres = (genres: string[] | undefined) => {
   if (!genres) return '';
   return genres
-    .map(genre => GENRE_MAP[genre as keyof typeof GENRE_MAP] || genre)
+    .map(genre => GENRE_MAP[genre as keyof typeof GENRE_MAP].translation || genre)
     .join(', ')
 };
 

@@ -19,12 +19,12 @@ onMounted(getTop10);
 
 </script>
 <template>
-    <div class="top">
+    <section class="top">
         <h2 class="top__title">Топ 10 фильмов</h2>
         <ol class="top__list">
             <li class="top__item" v-for="movie in topMovies">
                 <TopMovieCard :movie="movie" />
             </li>
         </ol>
-    </div>
+    </section>
 </template>
