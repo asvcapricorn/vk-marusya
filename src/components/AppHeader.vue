@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import { storeToRefs } from 'pinia'
 import api from '@/services/api';
+import { useUserStore } from '@/stores/user';
 import type { IMovie } from '../types/movie';
 import SearchForm from './SearchForm.vue';
+import AuthModal from '@/components/AuthModal.vue';
 
+const store = useUserStore();
+const { isAuthorized } = storeToRefs(store);
+
+const isAuthModalOpen = ref(false);
 const search = ref('');
 const searchResults = ref<IMovie[]>([]);
 
@@ -54,7 +61,9 @@ watch(search, async (newVal) => {
           <RouterLink class="header__link" to="/genres">Жанры</RouterLink>
           <SearchForm v-model="search" :searchResults="searchResults" />
         </div>
-        <RouterLink class="header__link" to="/auth">Войти</RouterLink>
+        <RouterLink class="header__link" to="/profile" v-if="isAuthorized">Профиль</RouterLink>
+        <button class="header__link" type="button" @click="isAuthModalOpen = true" v-else>Войти</button>
+        <AuthModal v-model="isAuthModalOpen" />
       </div>
     </div>
   </header>
