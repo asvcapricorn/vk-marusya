@@ -1,0 +1,44 @@
+@use '../global/variables.scss' as *;
+
+.movies {
+  $root: &;
+  margin: 0 0 120px;
+
+  &--top {
+    #{$root}__item::before {
+      display: block;
+    }
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 40px 64px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: movie-counter;
+  }
+
+  &__item {
+    display: flex;
+
+    position: relative;
+
+    &::before {
+      display: none;
+      counter-increment: movie-counter;
+      content: counter(movie-counter);
+      position: absolute;
+      left: -12px;
+      top: -12px;
+      font-weight: 700;
+      color: $color-circumorbital-ring;
+      padding: 8px 24px;
+      background-color: $color-white;
+      border-radius: 50px;
+      z-index: 10;
+      pointer-events: none;
+    }
+  }
+}

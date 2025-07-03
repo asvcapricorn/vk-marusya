@@ -24,7 +24,6 @@ watch(() => route.params.movieId, (newId) => {
     getMovie(newId as string);
 });
 
-
 </script>
 
 <template>

@@ -2,8 +2,9 @@
 import { ref, onMounted } from 'vue';
 import api from '@/services/api';
 import GenreCard from '../components/GenreCard.vue';
+import type { GenreKey } from '@/constants/genres';
 
-const genres = ref<string[] | null>(null);
+const genres = ref<GenreKey[] | null>(null);
 
 const getGenres = async (): Promise<void> => {
   try {

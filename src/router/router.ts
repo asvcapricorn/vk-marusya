@@ -14,14 +14,19 @@ const router = createRouter({
       component: () => import('../views/GenresView.vue'),
     },
     {
-      path: '/auth',
-      name: 'auth',
-      component: () => import('../views/AuthView.vue'),
+      path: '/moviesByGenre/:genre',
+      name: 'moviesByGenre',
+      component: () => import('../views/MoviesByGenreView.vue'),
     },
     {
       path: '/movie/:movieId',
       name: 'movie',
       component: () => import('../views/MovieView.vue'),
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: () => import('../views/AuthView.vue'),
     },
   ],
   scrollBehavior() {

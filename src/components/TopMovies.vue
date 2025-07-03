@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { ref, onMounted } from 'vue';
 import api from '@/services/api';
-import TopMovieCard from './TopMovieCard.vue';
+import MoviesList from './MoviesList.vue';
 import type { IMovie } from '../types/movie';
 
 const topMovies = ref<IMovie[] | []>([]);
@@ -20,11 +20,9 @@ onMounted(getTop10);
 </script>
 <template>
     <section class="top">
-        <h2 class="top__title">Топ 10 фильмов</h2>
-        <ol class="top__list">
-            <li class="top__item" v-for="movie in topMovies">
-                <TopMovieCard :movie="movie" />
-            </li>
-        </ol>
+        <div class="container">
+            <h2 class="top__title">Топ 10 фильмов</h2>
+            <MoviesList :movies="topMovies" :cardTop="true" />
+        </div>
     </section>
 </template>
