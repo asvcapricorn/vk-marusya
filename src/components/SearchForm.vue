@@ -1,12 +1,43 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
 import type { IMovie } from '../types/movie';
 import MovieCard from './MovieCard.vue';
 
 const props = defineProps<{ modelValue: string, searchResults: IMovie[] | null }>();
 const emit = defineEmits(['update:modelValue']);
 
-// const foo = ref();
+const isShow = ref(false);
+const searchResultsRef = ref<HTMLElement | null>(null);
+
+watch(
+    () => props.searchResults,
+    (newResults) => {
+        isShow.value = !!newResults && newResults.length > 0;
+    },
+    { immediate: true }
+);
+
+const handleClickOutside = (event: MouseEvent) => {
+    if (searchResultsRef.value && !searchResultsRef.value.contains(event.target as Node)) {
+        isShow.value = false;
+    }
+};
+
+const handleKeydown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+        isShow.value = false;
+    }
+};
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('keydown', handleKeydown);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside);
+    document.removeEventListener('keydown', handleKeydown);
+});
 
 </script>
 
@@ -25,10 +56,9 @@ const emit = defineEmits(['update:modelValue']);
                 </svg>
             </button>
         </div>
-        <ul class="search-form__results"
-            :class="{ 'search-form__results--show': searchResults && searchResults.length > 0 }">
-            <li class="search-form__result" v-for="movie in searchResults">
-                <MovieCard :movie=movie :for-search="true" />
+        <ul class="search-form__results" :class="{ 'search-form__results--show': isShow }" ref="searchResultsRef">
+            <li class="search-form__result" v-for="movie in searchResults" :key="movie.id">
+                <MovieCard :movie=movie :for-search="true" @click="isShow = false" />
             </li>
         </ul>
     </form>
