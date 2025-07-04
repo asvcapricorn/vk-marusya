@@ -61,9 +61,12 @@ watch(search, async (newVal) => {
           <RouterLink class="header__link" to="/genres">Жанры</RouterLink>
           <SearchForm v-model="search" :searchResults="searchResults" />
         </div>
-        <RouterLink class="header__link" to="/profile" v-if="isAuthorized">Профиль</RouterLink>
-        <button class="header__link" type="button" @click="isAuthModalOpen = true" v-else>Войти</button>
-        <AuthModal v-model="isAuthModalOpen" />
+        <div class="header__right">
+          <RouterLink class="header__link header__link--profile" to="/profile" v-if="isAuthorized">Профиль</RouterLink>
+          <button class="header__link header__link--profile" type="button" @click="isAuthModalOpen = true"
+            v-else>Войти</button>
+          <AuthModal v-model="isAuthModalOpen" />
+        </div>
       </div>
     </div>
   </header>

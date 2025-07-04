@@ -46,7 +46,7 @@ onUnmounted(() => {
         <div class="custom-input">
             <input class="custom-input__field" name="search" id="search" type="text" placeholder="Поиск"
                 :value="modelValue" @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)">
-            <svg class="custom-input__search-icon" width="24" height="24" aria-hidden="true">
+            <svg class="custom-input__icon" width="24" height="24" aria-hidden="true">
                 <use xlink:href="@/assets/images/sprite.svg#icon-search"></use>
             </svg>
             <button class="custom-input__btn" type="button" aria-label="Кнопка удаления введенного в поле запроса"

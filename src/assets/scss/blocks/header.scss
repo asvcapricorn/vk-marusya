@@ -6,7 +6,7 @@
   &__wrapper {
     display: grid;
     gap: 80px;
-    grid-template-columns: 144px 1fr 69px;
+    grid-template-columns: 144px 1fr 132px;
     justify-content: space-between;
     align-items: center;
   }
@@ -35,6 +35,10 @@
     font-family: $ff-main;
     cursor: pointer;
 
+    &--profile {
+      text-align: right;
+    }
+
     &:hover,
     &:focus-visible {
       color: $color-winterspring-lilac;
@@ -56,5 +60,11 @@
         display: block;
       }
     }
+  }
+
+  &__right {
+    display: flex;
+    justify-content: end;
+    align-items: center;
   }
 }

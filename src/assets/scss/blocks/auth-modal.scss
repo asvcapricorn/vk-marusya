@@ -1,0 +1,38 @@
+@use '../global/variables.scss' as *;
+
+.auth-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $color-white;
+  padding: 64px 40px 48px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 40px;
+  }
+
+  &__btn {
+    position: absolute;
+    padding: 12px;
+    background-color: $color-white;
+    border-radius: 50%;
+    color: $color-black;
+    border: none;
+    top: 0;
+    right: -72px;
+    transition: background-color $transition-80;
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+      background-color: $color-winterspring-lilac;
+    }
+  }
+}

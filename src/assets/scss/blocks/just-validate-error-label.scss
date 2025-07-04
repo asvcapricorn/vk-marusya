@@ -1,0 +1,5 @@
+@use '../global/variables' as *;
+
+.just-validate-error-label {
+  color: $color-embarrassment !important;
+}
