@@ -28,9 +28,9 @@ watch(() => route.params.movieId, (newId) => {
 
 <template>
     <main>
-        <div class="container">
-            <div class="movie-view">
-                <h1 class="visually-hidden">Страница фильма</h1>
+        <section class="movie-view">
+            <h1 class="visually-hidden">Страница фильма</h1>
+            <div class="container">
                 <div class="movie-view__wrapper">
                     <MovieCard :movie=movie :for-view=true />
                     <div class="movie-view__about">
@@ -82,6 +82,6 @@ watch(() => route.params.movieId, (newId) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 </template>

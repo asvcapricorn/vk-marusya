@@ -7,7 +7,7 @@ import { storeToRefs } from 'pinia'
 
 export function useAuthForm(closeModal: () => void) {
   const store = useUserStore()
-  const { isAuthorized } = storeToRefs(store)
+  const { isAuthorized, userEmail, userName, userSurname } = storeToRefs(store)
 
   const email = ref('')
   const password = ref('')
@@ -23,10 +23,13 @@ export function useAuthForm(closeModal: () => void) {
       isAuthorized.value = true
 
       try {
-        const resp = await api.get('/profile', {
-          withCredentials: true,
-        })
+        const resp = await api.get('/profile')
         const data = await resp.data
+        userEmail.value = data.email
+        userName.value = data.name
+        userSurname.value = data.surname
+
+        localStorage.setItem('user', JSON.stringify(data))
       } catch (err) {
         console.error('Profile error:', err)
         throw new Error('Profile failed')

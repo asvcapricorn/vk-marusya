@@ -17,6 +17,10 @@ const getRandomMovie = async (): Promise<void> => {
 
 onMounted(getRandomMovie);
 
+
+
+
+
 </script>
 <template>
   <section class="random-movie">

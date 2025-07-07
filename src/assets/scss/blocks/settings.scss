@@ -1,0 +1,42 @@
+@use '../global/variables.scss' as *;
+
+.settings {
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin: 0 0 64px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__icon-wrapper {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-white-50;
+    border-radius: 50%;
+  }
+
+  &__icon,
+  &__value {
+    font-weight: 700;
+  }
+
+  &__text {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}

@@ -27,6 +27,20 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: () => import('../views/ProfileView.vue'),
+      children: [
+        {
+          path: '',
+          redirect: '/profile/settings',
+        },
+        {
+          path: 'favourites',
+          component: () => import('../components/FavouriteMovies.vue'),
+        },
+        {
+          path: 'settings',
+          component: () => import('../components/UserSettings.vue'),
+        },
+      ],
     },
   ],
   scrollBehavior() {

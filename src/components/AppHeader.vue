@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { storeToRefs } from 'pinia'
+import { ref, watch, onMounted } from 'vue';
 import api from '@/services/api';
-import { useUserStore } from '@/stores/user';
 import type { IMovie } from '../types/movie';
 import SearchForm from './SearchForm.vue';
 import AuthModal from '@/components/AuthModal.vue';
-
-const store = useUserStore();
-const { isAuthorized } = storeToRefs(store);
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
 const isAuthModalOpen = ref(false);
 const search = ref('');
@@ -44,6 +41,17 @@ watch(search, async (newVal) => {
     searchResults.value = [];
   }
 });
+
+const store = useUserStore();
+const { userName } = storeToRefs(store);
+
+onMounted(() => {
+  const userData = localStorage.getItem('user');
+  if (userData) {
+    userName.value = JSON.parse(userData).name;
+  }
+});
+
 </script>
 
 <template>
@@ -62,7 +70,9 @@ watch(search, async (newVal) => {
           <SearchForm v-model="search" :searchResults="searchResults" />
         </div>
         <div class="header__right">
-          <RouterLink class="header__link header__link--profile" to="/profile" v-if="isAuthorized">Профиль</RouterLink>
+          <RouterLink class="header__link header__link--profile" to="/profile" v-if="userName">
+            {{ userName }}
+          </RouterLink>
           <button class="header__link header__link--profile" type="button" @click="isAuthModalOpen = true"
             v-else>Войти</button>
           <AuthModal v-model="isAuthModalOpen" />

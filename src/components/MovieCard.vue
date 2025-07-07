@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import api from '@/services/api';
 import AppLoader from './AppLoader.vue';
 import type { IMovie } from '../types/movie'
 import { GENRE_MAP } from '@/constants/genres';
 
-defineProps<{ movie: IMovie | null, forSearch?: boolean, forView?: boolean }>();
+const props = defineProps<{ movie: IMovie | null, forSearch?: boolean, forView?: boolean }>();
 const emit = defineEmits(['refreshMovie']);
 
 const getTranslatedGenres = (genres: string[] | undefined) => {
@@ -33,6 +35,60 @@ const getRatingClass = (rating: number | undefined) => {
   return 'movie-card__rating--bad';
 };
 
+const isFav = ref(false);
+const favsId = ref<number[]>([]);
+
+const addToFavs = async () => {
+  try {
+    await api.post('/favorites',
+      {
+        id: String(props.movie?.id)
+      });
+    if (props.movie?.id !== undefined) {
+      favsId.value.push(props.movie.id);
+      isFav.value = true;
+    };
+  } catch (err) {
+    throw new Error('add to favourites response was not ok')
+  }
+};
+
+const deleteFromFavs = async () => {
+  try {
+    await api.delete(`/favorites/${props.movie?.id}`);
+    if (props.movie?.id !== undefined) {
+      favsId.value = favsId.value.filter(id => id !== props.movie?.id);
+      isFav.value = false;
+    };
+  } catch (err) {
+    throw new Error('delete from favourites response was not ok')
+  }
+};
+
+const checkIsFav = async () => {
+  try {
+    const resp = await api.get('/favorites');
+    const data = await resp.data;
+    favsId.value = data.map((item: IMovie) => item.id);
+  } catch (err) {
+    throw new Error('favorites response was not ok')
+  }
+  if (props.movie?.id !== undefined) {
+    isFav.value = favsId.value.includes(props.movie?.id);
+  };
+}
+
+const toggleFav = async () => {
+  try {
+    isFav.value ? await deleteFromFavs() : await addToFavs();
+  } catch (err) {
+    console.error('Error toggling favorite:', err);
+  }
+};
+
+onMounted(async () => {
+  checkIsFav();
+})
 </script>
 
 <template>
@@ -56,9 +112,12 @@ const getRatingClass = (rating: number | undefined) => {
       <div class="movie-card__btns">
         <button class="btn btn--primary" type="button">Трейлер</button>
         <RouterLink class="btn btn--secondary btn--random" :to="`/movie/${movie?.id}`">О фильме</RouterLink>
-        <button class="btn btn--secondary btn--icon" type="button">
-          <svg class="movie-card__rating-icon" width="24" height="24" aria-hidden="true">
+        <button class="btn btn--secondary btn--icon" type="button" @click="toggleFav()">
+          <svg class="movie-card__icon" width="24" height="24" aria-hidden="true" v-if="!isFav">
             <use xlink:href="@/assets/images/sprite.svg#icon-fav"></use>
+          </svg>
+          <svg class="movie-card__icon-is-fav" width="24" height="24" aria-hidden="true" v-else>
+            <use xlink:href="@/assets/images/sprite.svg#icon-fav-fill"></use>
           </svg>
         </button>
         <button class="btn btn--secondary btn--icon btn--random" type="button" @click="emit('refreshMovie')">
@@ -70,7 +129,7 @@ const getRatingClass = (rating: number | undefined) => {
     </div>
     <img class="movie-card__image" :src="movie?.posterUrl" height="552" width="680" alt="Постер фильма"
       v-if="movie.posterUrl">
-    <svg class="movie-card__icon" width="16" height="16" aria-hidden="true" v-else>
+    <svg class="movie-card__icon-default" width="16" height="16" aria-hidden="true" v-else>
       <use xlink:href="@/assets/images/sprite.svg#icon-movie"></use>
     </svg>
     <RouterLink class="movie-card__link-search" :to="`/movie/${movie?.id}`"></RouterLink>
