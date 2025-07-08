@@ -39,7 +39,6 @@ const isFav = ref<boolean>(false);
 const favStore = useFavStore();
 
 const checkFavoriteStatus = () => {
-  console.log(isFav.value, 'checkFavoriteStatus');
   if (!props.movie?.id) return
   try {
     isFav.value = favStore.isFavorite(props.movie.id);

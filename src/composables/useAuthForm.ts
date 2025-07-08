@@ -40,13 +40,34 @@ export function useAuthForm(closeModal: () => void) {
     }
   }
 
+  // const initValidator = (formSelector: string) => {
+  //   validator.value = new JustValidate(formSelector, {
+  //     validateBeforeSubmitting: true,
+  //   })
+
+  //   validator.value
+  //     .addField('#email', [{ rule: 'required' }, { rule: 'email' }], {
+  //       errorsContainer: '#email + .custom-input__error',
+  //     })
+  //     .addField('#password', [{ rule: 'required' }], {
+  //       errorsContainer: '#password + .custom-input__error',
+  //     })
+  //     .onValidate((fields: Fields) => {
+  //       for (const key in fields.fields) {
+  //         const field = fields.fields[key]
+  //         field.elem
+  //           .closest('.custom-input')
+  //           ?.classList.toggle('custom-input--error', !field.isValid)
+  //       }
+  //     })
+  //     .onSuccess(handleSubmit)
+  // }
+
   const initValidator = (formSelector: string) => {
-    validator.value = new JustValidate(formSelector, {
-      validateBeforeSubmitting: true,
-    })
+    validator.value = new JustValidate(formSelector)
 
     validator.value
-      .addField('#email', [{ rule: 'required' }, { rule: 'email' }], {
+      .addField('#email', [{ rule: 'required' }], {
         errorsContainer: '#email + .custom-input__error',
       })
       .addField('#password', [{ rule: 'required' }], {
