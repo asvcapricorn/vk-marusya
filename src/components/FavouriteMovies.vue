@@ -1,28 +1,24 @@
 <script setup lang='ts'>
-import { ref, onMounted } from 'vue';
-import api from '@/services/api';
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import MoviesList from './MoviesList.vue';
-import type { IMovie } from '../types/movie';
+import { useFavStore } from '@/stores/favourites'
 
-const topMovies = ref<IMovie[] | []>([]);
+const favStore = useFavStore();
+const { favMovies } = storeToRefs(favStore);
 
-const getTop10 = async (): Promise<void> => {
+onMounted(async () => {
     try {
-        const resp = await api.get('/movie/top10');
-        topMovies.value = await resp.data;
+        await favStore.fetchFavMovies()
     } catch (err) {
-        throw new Error('top 10 movies response was not ok')
+        console.error('Failed to load favorites:', err)
     }
-}
-
-onMounted(getTop10);
+})
 
 </script>
 <template>
-    <section class="top">
-        <div class="container">
-            <h2 class="top__title">Топ 10 фильмов</h2>
-            <MoviesList :movies="topMovies" :cardTop="true" />
-        </div>
+    <section class="favourites">
+        <MoviesList :movies="favMovies" :cardTop="true" :isFav="true" v-if="favMovies && favMovies.length" />
+        <span class="favourites__text" v-else>Вы пока не добавили ни одного фильма в избранное</span>
     </section>
 </template>

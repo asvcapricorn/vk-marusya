@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import api from '@/services/api';
+import { ref, watch } from 'vue';
 import AppLoader from './AppLoader.vue';
 import type { IMovie } from '../types/movie'
 import { GENRE_MAP } from '@/constants/genres';
+import { useFavStore } from '@/stores/favourites'
 
 const props = defineProps<{ movie: IMovie | null, forSearch?: boolean, forView?: boolean }>();
-const emit = defineEmits(['refreshMovie']);
 
 const getTranslatedGenres = (genres: string[] | undefined) => {
   if (!genres) return '';
@@ -35,60 +34,36 @@ const getRatingClass = (rating: number | undefined) => {
   return 'movie-card__rating--bad';
 };
 
-const isFav = ref(false);
-const favsId = ref<number[]>([]);
+const isFav = ref<boolean>(false);
 
-const addToFavs = async () => {
+const favStore = useFavStore();
+
+const checkFavoriteStatus = () => {
+  console.log(isFav.value, 'checkFavoriteStatus');
+  if (!props.movie?.id) return
   try {
-    await api.post('/favorites',
-      {
-        id: String(props.movie?.id)
-      });
-    if (props.movie?.id !== undefined) {
-      favsId.value.push(props.movie.id);
-      isFav.value = true;
-    };
+    isFav.value = favStore.isFavorite(props.movie.id);
   } catch (err) {
-    throw new Error('add to favourites response was not ok')
+    console.error('Failed to check favoutire status of movie:', err)
   }
 };
 
-const deleteFromFavs = async () => {
+const handleToggleFav = async () => {
+  if (!props.movie?.id) return
   try {
-    await api.delete(`/favorites/${props.movie?.id}`);
-    if (props.movie?.id !== undefined) {
-      favsId.value = favsId.value.filter(id => id !== props.movie?.id);
-      isFav.value = false;
-    };
+    await favStore.toggleFavorite(props.movie.id);
+    isFav.value = !isFav.value;
   } catch (err) {
-    throw new Error('delete from favourites response was not ok')
+    console.error('Failed to toggle favourite:', err)
   }
 };
 
-const checkIsFav = async () => {
-  try {
-    const resp = await api.get('/favorites');
-    const data = await resp.data;
-    favsId.value = data.map((item: IMovie) => item.id);
-  } catch (err) {
-    throw new Error('favorites response was not ok')
-  }
-  if (props.movie?.id !== undefined) {
-    isFav.value = favsId.value.includes(props.movie?.id);
-  };
-}
 
-const toggleFav = async () => {
-  try {
-    isFav.value ? await deleteFromFavs() : await addToFavs();
-  } catch (err) {
-    console.error('Error toggling favorite:', err);
+watch(() => props.movie, (newMovie) => {
+  if (newMovie) {
+    checkFavoriteStatus();
   }
-};
-
-onMounted(async () => {
-  checkIsFav();
-})
+}, { immediate: true });
 </script>
 
 <template>
@@ -112,7 +87,7 @@ onMounted(async () => {
       <div class="movie-card__btns">
         <button class="btn btn--primary" type="button">Трейлер</button>
         <RouterLink class="btn btn--secondary btn--random" :to="`/movie/${movie?.id}`">О фильме</RouterLink>
-        <button class="btn btn--secondary btn--icon" type="button" @click="toggleFav()">
+        <button class="btn btn--secondary btn--icon" type="button" @click="handleToggleFav">
           <svg class="movie-card__icon" width="24" height="24" aria-hidden="true" v-if="!isFav">
             <use xlink:href="@/assets/images/sprite.svg#icon-fav"></use>
           </svg>
@@ -120,7 +95,7 @@ onMounted(async () => {
             <use xlink:href="@/assets/images/sprite.svg#icon-fav-fill"></use>
           </svg>
         </button>
-        <button class="btn btn--secondary btn--icon btn--random" type="button" @click="emit('refreshMovie')">
+        <button class="btn btn--secondary btn--icon btn--random" type="button" @click="$emit('refreshMovie')">
           <svg class="movie-card__rating-icon" width="24" height="24" aria-hidden="true">
             <use xlink:href="@/assets/images/sprite.svg#icon-refresh"></use>
           </svg>

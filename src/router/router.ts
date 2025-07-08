@@ -30,7 +30,7 @@ const router = createRouter({
       children: [
         {
           path: '',
-          redirect: '/profile/settings',
+          redirect: '/profile/favourites',
         },
         {
           path: 'favourites',
