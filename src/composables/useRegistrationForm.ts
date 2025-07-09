@@ -4,12 +4,15 @@ import api from '@/services/api'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 
-export function useAuthForm(closeModal: () => void) {
+export function useRegistrationForm(closeModal: () => void) {
   const store = useUserStore()
   const { isAuthorized, userEmail, userName, userSurname } = storeToRefs(store)
 
   const email = ref('')
+  const name = ref('')
+  const surname = ref('')
   const password = ref('')
+  const confirmPassword = ref('')
   const validator = ref<typeof JustValidate | null>(null)
 
   const handleSubmit = async () => {
@@ -40,10 +43,12 @@ export function useAuthForm(closeModal: () => void) {
   }
 
   const initValidator = (formSelector: string) => {
-    validator.value = new JustValidate(formSelector)
+    validator.value = new JustValidate(formSelector, {
+      validateBeforeSubmitting: true,
+    })
 
     validator.value
-      .addField('#email', [{ rule: 'required' }], {
+      .addField('#email', [{ rule: 'required' }, { rule: 'email' }], {
         errorsContainer: '#email + .custom-input__error',
       })
       .addField('#password', [{ rule: 'required' }], {
@@ -68,7 +73,10 @@ export function useAuthForm(closeModal: () => void) {
 
   return {
     email,
+    name,
+    surname,
     password,
+    confirmPassword,
     initValidator,
     destroyValidator,
   }

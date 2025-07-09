@@ -44,6 +44,14 @@ export function useModal(
     toggleBodyScroll(val)
   })
 
+  // watch(
+  //   () => modalStore.anyModalOpen,
+  //   (val) => {
+  //     toggleBodyScroll(val)
+  //   },
+  //   { immediate: true },
+  // )
+
   return {
     isOpen,
     close,

@@ -3,13 +3,18 @@ import { ref, watch, onMounted } from 'vue';
 import api from '@/services/api';
 import type { IMovie } from '../types/movie';
 import SearchForm from './SearchForm.vue';
-import AuthModal from '@/components/AuthModal.vue';
 import { useUserStore } from '@/stores/user'
+import { useModalStore } from '@/stores/modal'
 import { storeToRefs } from 'pinia'
 
-const isAuthModalOpen = ref(false);
 const search = ref('');
 const searchResults = ref<IMovie[]>([]);
+
+const userStore = useUserStore();
+const { userName } = storeToRefs(userStore);
+
+const modalStore = useModalStore();
+const { authModal } = storeToRefs(modalStore);
 
 interface IResponseMovies {
   movies: IMovie[]
@@ -42,9 +47,6 @@ watch(search, async (newVal) => {
   }
 });
 
-const store = useUserStore();
-const { userName } = storeToRefs(store);
-
 onMounted(() => {
   const userData = localStorage.getItem('user');
   if (userData) {
@@ -73,9 +75,8 @@ onMounted(() => {
           <RouterLink class="header__link header__link--profile" to="/profile" v-if="userName">
             {{ userName }}
           </RouterLink>
-          <button class="header__link header__link--profile" type="button" @click="isAuthModalOpen = true"
+          <button class="header__link header__link--profile" type="button" @click="authModal = true"
             v-else>Войти</button>
-          <AuthModal v-model="isAuthModalOpen" />
         </div>
       </div>
     </div>
