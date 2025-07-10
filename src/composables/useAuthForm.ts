@@ -3,16 +3,19 @@ import JustValidate from 'just-validate'
 import api from '@/services/api'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
+import type { IFields } from '@/types/validationFields'
 
 export function useAuthForm(closeModal: () => void) {
-  const store = useUserStore()
-  const { isAuthorized, userEmail, userName, userSurname } = storeToRefs(store)
+  const userStore = useUserStore()
+  const { isAuthorized, userEmail, userName, userSurname } = storeToRefs(userStore)
 
   const email = ref('')
   const password = ref('')
+
   const validator = ref<typeof JustValidate | null>(null)
 
   const handleSubmit = async () => {
+    const formEl = document.querySelector('.form')
     try {
       await api.post('/auth/login', {
         email: email.value,
@@ -20,6 +23,7 @@ export function useAuthForm(closeModal: () => void) {
       })
       closeModal()
       isAuthorized.value = true
+      formEl?.classList.remove('form--error')
 
       try {
         const resp = await api.get('/profile')
@@ -34,9 +38,16 @@ export function useAuthForm(closeModal: () => void) {
         throw new Error('Profile failed')
       }
     } catch (err) {
+      formEl?.classList.add('form--error')
       console.error('Login error:', err)
       throw new Error('Login failed')
     }
+  }
+
+  const clearErrorClasses = () => {
+    document.querySelectorAll('.custom-input--error').forEach((el) => {
+      el.classList.remove('custom-input--error')
+    })
   }
 
   const initValidator = (formSelector: string) => {
@@ -49,17 +60,21 @@ export function useAuthForm(closeModal: () => void) {
       .addField('#password', [{ rule: 'required' }], {
         errorsContainer: '#password + .custom-input__error',
       })
-      .onValidate(
-        ({ fields }: { fields: Record<string, { elem: HTMLElement; isValid: boolean }> }) => {
-          for (const key in fields) {
-            const field = fields[key]
-            field.elem
-              .closest('.custom-input')
-              ?.classList.toggle('custom-input--error', !field.isValid)
-          }
-        },
-      )
-      .onSuccess(handleSubmit)
+      .onValidate(() => {
+        clearErrorClasses()
+      })
+      .onSuccess(() => {
+        clearErrorClasses()
+        handleSubmit()
+      })
+      .onFail((fields: IFields) => {
+        for (const key in fields) {
+          const field = fields[key]
+          field.elem
+            .closest('.custom-input')
+            ?.classList.toggle('custom-input--error', !field.isValid)
+        }
+      })
   }
 
   const destroyValidator = () => {

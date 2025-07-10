@@ -14,7 +14,9 @@ const userStore = useUserStore();
 const { userName } = storeToRefs(userStore);
 
 const modalStore = useModalStore();
-const { authModal } = storeToRefs(modalStore);
+const openAuth = () => {
+  modalStore.openAuthModal();
+};
 
 interface IResponseMovies {
   movies: IMovie[]
@@ -28,7 +30,6 @@ const getMovies = async (title: string): Promise<IResponseMovies> => {
     })
     const resp = await api.get(`/movie?${query}`);
     const movies = await resp.data;
-    console.log('movies', movies);
 
     return {
       movies: movies
@@ -75,8 +76,7 @@ onMounted(() => {
           <RouterLink class="header__link header__link--profile" to="/profile" v-if="userName">
             {{ userName }}
           </RouterLink>
-          <button class="header__link header__link--profile" type="button" @click="authModal = true"
-            v-else>Войти</button>
+          <button class="header__link header__link--profile" type="button" @click="openAuth" v-else>Войти</button>
         </div>
       </div>
     </div>

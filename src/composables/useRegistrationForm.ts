@@ -1,45 +1,39 @@
 import { ref } from 'vue'
 import JustValidate from 'just-validate'
 import api from '@/services/api'
-import { useUserStore } from '@/stores/user'
-import { storeToRefs } from 'pinia'
+import type { IFields } from '@/types/validationFields'
 
 export function useRegistrationForm(closeModal: () => void) {
-  const store = useUserStore()
-  const { isAuthorized, userEmail, userName, userSurname } = storeToRefs(store)
-
   const email = ref('')
-  const name = ref('')
-  const surname = ref('')
   const password = ref('')
   const confirmPassword = ref('')
+  const name = ref('')
+  const surname = ref('')
+
   const validator = ref<typeof JustValidate | null>(null)
 
   const handleSubmit = async () => {
+    const formEl = document.querySelector('.form')
     try {
-      await api.post('/auth/login', {
+      await api.post('/user', {
         email: email.value,
         password: password.value,
+        name: name.value,
+        surname: surname.value,
       })
       closeModal()
-      isAuthorized.value = true
-
-      try {
-        const resp = await api.get('/profile')
-        const data = await resp.data
-        userEmail.value = data.email
-        userName.value = data.name
-        userSurname.value = data.surname
-
-        localStorage.setItem('user', JSON.stringify(data))
-      } catch (err) {
-        console.error('Profile error:', err)
-        throw new Error('Profile failed')
-      }
+      formEl?.classList.remove('form--error')
     } catch (err) {
-      console.error('Login error:', err)
-      throw new Error('Login failed')
+      formEl?.classList.add('form--error')
+      console.error('Registration error:', err)
+      throw new Error('Registration failed')
     }
+  }
+
+  const clearErrorClasses = () => {
+    document.querySelectorAll('.custom-input--error').forEach((el) => {
+      el.classList.remove('custom-input--error')
+    })
   }
 
   const initValidator = (formSelector: string) => {
@@ -48,23 +42,47 @@ export function useRegistrationForm(closeModal: () => void) {
     })
 
     validator.value
-      .addField('#email', [{ rule: 'required' }, { rule: 'email' }], {
+      .addField('#email', [{ rule: 'email' }, { rule: 'required' }], {
         errorsContainer: '#email + .custom-input__error',
       })
-      .addField('#password', [{ rule: 'required' }], {
+      .addField('#password', [{ rule: 'password' }, { rule: 'required' }], {
         errorsContainer: '#password + .custom-input__error',
       })
-      .onValidate(
-        ({ fields }: { fields: Record<string, { elem: HTMLElement; isValid: boolean }> }) => {
-          for (const key in fields) {
-            const field = fields[key]
-            field.elem
-              .closest('.custom-input')
-              ?.classList.toggle('custom-input--error', !field.isValid)
-          }
+      .addField('#name', [{ rule: 'required' }], {
+        errorsContainer: '#name + .custom-input__error',
+      })
+      .addField('#surname', [{ rule: 'required' }], {
+        errorsContainer: '#surname + .custom-input__error',
+      })
+      .addField('#confirmPassword', [
+        {
+          validator: (value: string, fields: IFields) => {
+            if (fields['#password'] && fields['#password'].elem) {
+              const repeatPasswordValue = fields['#confirmPassword'].elem.value
+
+              return value === repeatPasswordValue
+            }
+
+            return true
+          },
+          errorMessage: 'Passwords should be the same',
         },
-      )
-      .onSuccess(handleSubmit)
+      ])
+      .onValidate(() => {
+        clearErrorClasses()
+      })
+      .onSuccess(() => {
+        clearErrorClasses()
+        handleSubmit()
+      })
+      .onFail((fields: IFields) => {
+        for (const key in fields) {
+          const field = fields[key]
+          field.elem
+            .closest('.custom-input')
+            ?.classList.toggle('custom-input--error', !field.isValid)
+        }
+      })
   }
 
   const destroyValidator = () => {

@@ -70,12 +70,15 @@
   }
 
   &__error {
-    position: absolute;
-    bottom: -15px;
-    left: 0;
+    // position: absolute;
+    position: relative;
+    // bottom: -15px;
+    // left: 0;
     font-size: 14px;
     line-height: 16px;
     pointer-events: none;
+    width: 100%;
+    display: block;
   }
 
   &__icon {
@@ -111,17 +114,4 @@
       color: $color-winterspring-lilac;
     }
   }
-
-  // &__tooltip-error {
-  //   font-size: 14px;
-  //   line-height: 20px;
-  //   background-color: $color-winterspring-lilac !important;
-  //   top: 110px !important;
-  //   right: 20px !important;
-  //   left: auto !important;
-
-  //   &::before {
-  //     border-bottom-color: $color-winterspring-lilac !important;
-  //   }
-  // }
 }

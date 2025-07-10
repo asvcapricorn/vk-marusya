@@ -1,4 +1,4 @@
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { computed, onMounted, onUnmounted, watch } from 'vue'
 
 export function useModal(
   props: { modelValue: boolean },
@@ -9,8 +9,6 @@ export function useModal(
     set: (value) => emit('update:modelValue', value),
   })
 
-  const scrollbarWidth = ref(0)
-
   const close = () => {
     isOpen.value = false
   }
@@ -19,38 +17,13 @@ export function useModal(
     if (e.key === 'Escape') close()
   }
 
-  const toggleBodyScroll = (disable: boolean) => {
-    const body = document.body
-    if (disable) {
-      scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth
-      body.style.paddingRight = `${scrollbarWidth.value}px`
-      body.classList.add('body-no-scroll')
-    } else {
-      body.classList.remove('body-no-scroll')
-      body.style.paddingRight = ''
-    }
-  }
-
   onMounted(() => {
     window.addEventListener('keydown', onKeydown)
   })
 
   onUnmounted(() => {
     window.removeEventListener('keydown', onKeydown)
-    toggleBodyScroll(false)
   })
-
-  watch(isOpen, (val) => {
-    toggleBodyScroll(val)
-  })
-
-  // watch(
-  //   () => modalStore.anyModalOpen,
-  //   (val) => {
-  //     toggleBodyScroll(val)
-  //   },
-  //   { immediate: true },
-  // )
 
   return {
     isOpen,

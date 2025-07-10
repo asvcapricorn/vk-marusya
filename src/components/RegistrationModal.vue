@@ -41,8 +41,11 @@ const openAuth = () => {
                 <img class="modal__image" src="@/assets/images/logo-light.png"
                     srcset="@/assets/images/logo-light@2x.png 2x" height="35" width="157" alt="Логотип">
             </picture>
-            <form class="registration-form">
-                <fieldset class="registration-form__group">
+            <form class="form registration-form">
+                <span class="form__error">Registration error. Such user already exists or there is an error in the
+                    parameters being passed.</span>
+                <fieldset class="form__group">
+                    <legend class="form__group-name">Регистрация</legend>
                     <div class="custom-input custom-input--light">
                         <input class="custom-input__field" name="email" id="email" type="email"
                             placeholder="Электронная почта" v-model="email">
@@ -76,17 +79,17 @@ const openAuth = () => {
                         </svg>
                     </div>
                     <div class="custom-input custom-input--light">
-                        <input class="custom-input__field" name="confirmPassword" id="confirmPassword"
-                            type="confirmPassword" placeholder="Подтвердите пароль" v-model="confirmPassword">
+                        <input class="custom-input__field" name="confirmPassword" id="confirmPassword" type="password"
+                            placeholder="Подтвердите пароль" v-model="confirmPassword">
                         <span class="custom-input__error"></span>
                         <svg class="custom-input__icon" width="24" height="24" aria-hidden="true">
                             <use xlink:href="@/assets/images/sprite.svg#icon-key"></use>
                         </svg>
                     </div>
                 </fieldset>
-                <div class="registration-form__wrapper">
-                    <button class="registration-form__btn btn btn--primary" type="submit">Создать аккаунт</button>
-                    <button class="registration-form__btn btn btn--tertiary" type="button" @click="openAuth">У меня
+                <div class="form__wrapper">
+                    <button class="form__btn btn btn--primary" type="submit">Создать аккаунт</button>
+                    <button class="form__btn btn btn--tertiary" type="button" @click="openAuth">У меня
                         есть пароль</button>
                 </div>
             </form>
