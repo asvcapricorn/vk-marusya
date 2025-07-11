@@ -32,6 +32,7 @@ const openAuth = () => {
     close();
     modalStore.openAuthModal();
 };
+
 </script>
 
 <template>
@@ -42,9 +43,8 @@ const openAuth = () => {
                     srcset="@/assets/images/logo-light@2x.png 2x" height="35" width="157" alt="Логотип">
             </picture>
             <form class="form registration-form">
-                <span class="form__error">Registration error. Such user already exists or there is an error in the
-                    parameters being passed.</span>
                 <fieldset class="form__group">
+                    <span class="form__error">Registration error. Such user already exists.</span>
                     <legend class="form__group-name">Регистрация</legend>
                     <div class="custom-input custom-input--light">
                         <input class="custom-input__field" name="email" id="email" type="email"

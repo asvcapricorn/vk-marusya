@@ -18,6 +18,26 @@
     margin: 0 0 40px;
   }
 
+  &__title {
+    font-weight: 700;
+    margin: 0 0 24px;
+    color: $color-black;
+    display: block;
+    text-align: center;
+    max-width: 340px;
+  }
+
+  &__text {
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: $color-black;
+    display: block;
+    text-align: center;
+    margin: 0 0 24px;
+    max-width: 340px;
+  }
+
   &__btn {
     position: absolute;
     padding: 12px;

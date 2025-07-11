@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useModalStore = defineStore('modal', () => {
@@ -7,17 +7,27 @@ export const useModalStore = defineStore('modal', () => {
 
   const authModal = ref(false)
   const registrationModal = ref(false)
+  const successModal = ref(false)
   const isBodyScrollLocked = ref(false)
 
   const openAuthModal = () => {
     authModal.value = true
     registrationModal.value = false
+    successModal.value = false
     lockBodyScroll()
   }
 
   const openRegistrationModal = () => {
     registrationModal.value = true
     authModal.value = false
+    successModal.value = false
+    unlockBodyScroll()
+  }
+
+  const openSuccessModal = () => {
+    successModal.value = true
+    authModal.value = false
+    registrationModal.value = false
     unlockBodyScroll()
   }
 
@@ -30,18 +40,28 @@ export const useModalStore = defineStore('modal', () => {
     }
   }
   const unlockBodyScroll = () => {
-    if (isBodyScrollLocked.value && !authModal.value && !registrationModal.value) {
+    if (
+      isBodyScrollLocked.value &&
+      !authModal.value &&
+      !registrationModal.value &&
+      !successModal.value
+    ) {
       body.classList.remove('body-no-scroll')
       body.style.paddingRight = ''
       isBodyScrollLocked.value = false
     }
   }
 
+  watch([authModal, registrationModal, successModal], () => {
+    unlockBodyScroll()
+  })
+
   return {
     authModal,
     registrationModal,
-    isBodyScrollLocked,
+    successModal,
     openAuthModal,
     openRegistrationModal,
+    openSuccessModal,
   }
 })

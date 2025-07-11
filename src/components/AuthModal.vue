@@ -43,8 +43,8 @@ const openRegistration = () => {
                     srcset="@/assets/images/logo-light@2x.png 2x" height="35" width="157" alt="Логотип">
             </picture>
             <form class="form auth-form">
-                <span class="form__error">Incorrect email or password!</span>
                 <fieldset class="form__group">
+                    <span class="form__error">Incorrect email or password!</span>
                     <div class="custom-input custom-input--light">
                         <input class="custom-input__field" name="email" id="email" type="email"
                             placeholder="Электронная почта" v-model="email">

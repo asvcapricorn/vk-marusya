@@ -4,8 +4,5 @@
   color: $color-embarrassment !important;
   position: absolute;
   bottom: 0px;
-  top: calc(100% + 15px);
-  // bottom: -15px;
-  width: 100%;
-  z-index: 10;
+  top: 100%;
 }

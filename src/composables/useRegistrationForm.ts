@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import JustValidate from 'just-validate'
 import api from '@/services/api'
 import type { IFields } from '@/types/validationFields'
+import { useModalStore } from '@/stores/modal'
 
 export function useRegistrationForm(closeModal: () => void) {
   const email = ref('')
@@ -12,6 +13,13 @@ export function useRegistrationForm(closeModal: () => void) {
 
   const validator = ref<typeof JustValidate | null>(null)
 
+  const modalStore = useModalStore()
+
+  const openSuccess = () => {
+    closeModal()
+    modalStore.openSuccessModal()
+  }
+
   const handleSubmit = async () => {
     const formEl = document.querySelector('.form')
     try {
@@ -21,9 +29,10 @@ export function useRegistrationForm(closeModal: () => void) {
         name: name.value,
         surname: surname.value,
       })
-      closeModal()
+      openSuccess()
       formEl?.classList.remove('form--error')
     } catch (err) {
+      console.log('formEl', formEl)
       formEl?.classList.add('form--error')
       console.error('Registration error:', err)
       throw new Error('Registration failed')
@@ -45,29 +54,40 @@ export function useRegistrationForm(closeModal: () => void) {
       .addField('#email', [{ rule: 'email' }, { rule: 'required' }], {
         errorsContainer: '#email + .custom-input__error',
       })
-      .addField('#password', [{ rule: 'password' }, { rule: 'required' }], {
-        errorsContainer: '#password + .custom-input__error',
-      })
+      .addField(
+        '#password',
+        [
+          { rule: 'password', errorMessage: 'Minimum eight characters, one letter and one number' },
+          { rule: 'required' },
+        ],
+        {
+          errorsContainer: '#password + .custom-input__error',
+        },
+      )
       .addField('#name', [{ rule: 'required' }], {
         errorsContainer: '#name + .custom-input__error',
       })
       .addField('#surname', [{ rule: 'required' }], {
         errorsContainer: '#surname + .custom-input__error',
       })
-      .addField('#confirmPassword', [
-        {
-          validator: (value: string, fields: IFields) => {
-            if (fields['#password'] && fields['#password'].elem) {
-              const repeatPasswordValue = fields['#confirmPassword'].elem.value
-
-              return value === repeatPasswordValue
-            }
-
-            return true
+      .addField(
+        '#confirmPassword',
+        [
+          {
+            validator: (value: string, fields: IFields) => {
+              if (fields['#password'] && fields['#password'].elem) {
+                const passwordValue = fields['#password'].elem.value
+                return value === passwordValue
+              }
+              return true
+            },
+            errorMessage: 'Passwords should be the same',
           },
-          errorMessage: 'Passwords should be the same',
+        ],
+        {
+          errorsContainer: '#confirmPassword + .custom-input__error',
         },
-      ])
+      )
       .onValidate(() => {
         clearErrorClasses()
       })
