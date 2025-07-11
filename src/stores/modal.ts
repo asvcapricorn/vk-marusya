@@ -8,7 +8,9 @@ export const useModalStore = defineStore('modal', () => {
   const authModal = ref(false)
   const registrationModal = ref(false)
   const successModal = ref(false)
+  const trailerModal = ref(false)
   const isBodyScrollLocked = ref(false)
+  const trailerUrl = ref('')
 
   const openAuthModal = () => {
     authModal.value = true
@@ -31,6 +33,11 @@ export const useModalStore = defineStore('modal', () => {
     unlockBodyScroll()
   }
 
+  const openTrailerModal = () => {
+    trailerModal.value = true
+    lockBodyScroll()
+  }
+
   const lockBodyScroll = () => {
     if (!isBodyScrollLocked.value) {
       scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth
@@ -44,7 +51,8 @@ export const useModalStore = defineStore('modal', () => {
       isBodyScrollLocked.value &&
       !authModal.value &&
       !registrationModal.value &&
-      !successModal.value
+      !successModal.value &&
+      !trailerModal.value
     ) {
       body.classList.remove('body-no-scroll')
       body.style.paddingRight = ''
@@ -52,7 +60,7 @@ export const useModalStore = defineStore('modal', () => {
     }
   }
 
-  watch([authModal, registrationModal, successModal], () => {
+  watch([authModal, registrationModal, successModal, trailerModal], () => {
     unlockBodyScroll()
   })
 
@@ -60,8 +68,11 @@ export const useModalStore = defineStore('modal', () => {
     authModal,
     registrationModal,
     successModal,
+    trailerModal,
+    trailerUrl,
     openAuthModal,
     openRegistrationModal,
     openSuccessModal,
+    openTrailerModal,
   }
 })

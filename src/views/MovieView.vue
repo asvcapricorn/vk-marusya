@@ -32,7 +32,7 @@ watch(() => route.params.movieId, (newId) => {
             <h1 class="visually-hidden">Страница фильма</h1>
             <div class="container">
                 <div class="movie-view__wrapper">
-                    <MovieCard :movie=movie :for-view=true />
+                    <MovieCard class="movie-card--view" :movie=movie />
                     <div class="movie-view__about">
                         <h2 class="movie-view__title">О фильме</h2>
                         <div class="movie-view__info">

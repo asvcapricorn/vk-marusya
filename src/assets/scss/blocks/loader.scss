@@ -11,6 +11,10 @@
   pointer-events: none;
   opacity: 1;
 
+  &--trailer {
+    background-color: transparent;
+  }
+
   &__logo {
     width: 150px;
     height: 150px;

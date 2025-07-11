@@ -2,7 +2,7 @@
 import type { IMovie } from '../types/movie'
 import { useFavStore } from '@/stores/favourites'
 
-const props = defineProps<{ movie: IMovie | null, isFav?: boolean }>();
+const props = defineProps<{ movie: IMovie | null }>();
 const favStore = useFavStore();
 
 const handleDelete = async () => {
@@ -17,7 +17,7 @@ const handleDelete = async () => {
 </script>
 
 <template>
-  <RouterLink class="poster-movie-card" :class="{ 'poster-movie-card--fav': isFav }" :to="`/movie/${movie?.id}`">
+  <RouterLink class="poster-movie-card" :to="`/movie/${movie?.id}`">
     <div class="poster-movie-card__wrapper">
       <img class="poster-movie-card__image" :src="movie?.posterUrl" v-if="movie?.posterUrl" height="336" width="224"
         alt="Постер фильма">

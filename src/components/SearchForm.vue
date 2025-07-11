@@ -58,7 +58,7 @@ onUnmounted(() => {
         </div>
         <ul class="search-form__results" :class="{ 'search-form__results--show': isShow }" ref="searchResultsRef">
             <li class="search-form__result" v-for="movie in searchResults" :key="movie.id">
-                <MovieCard :movie=movie :for-search="true" @click="isShow = false" />
+                <MovieCard class="movie-card--search" :movie=movie @click="isShow = false" />
             </li>
         </ul>
     </form>

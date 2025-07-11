@@ -12,6 +12,45 @@
   flex-direction: column;
   justify-content: center;
 
+  &--trailer {
+    width: 960px;
+    height: 540px;
+    background-color: $color-onyx;
+    border: 1px solid $color-white-50;
+    border-radius: initial;
+    padding: 0;
+  }
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__frame {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__frame-error {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__error-text {
+    margin: 0;
+  }
+
+  &__link {
+    display: block;
+  }
+
   &__logo {
     display: flex;
     justify-content: center;

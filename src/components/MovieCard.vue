@@ -4,8 +4,10 @@ import AppLoader from './AppLoader.vue';
 import type { IMovie } from '../types/movie'
 import { GENRE_MAP } from '@/constants/genres';
 import { useFavStore } from '@/stores/favourites'
+import { useModalStore } from '@/stores/modal'
+import { storeToRefs } from 'pinia'
 
-const props = defineProps<{ movie: IMovie | null, forSearch?: boolean, forView?: boolean }>();
+const props = defineProps<{ movie: IMovie | null }>();
 
 const getTranslatedGenres = (genres: string[] | undefined) => {
   if (!genres) return '';
@@ -37,6 +39,13 @@ const getRatingClass = (rating: number | undefined) => {
 const isFav = ref<boolean>(false);
 
 const favStore = useFavStore();
+const modalStore = useModalStore();
+
+const { trailerUrl } = storeToRefs(modalStore);
+
+const openTrailer = () => {
+  modalStore.openTrailerModal();
+};
 
 const checkFavoriteStatus = () => {
   if (!props.movie?.id) return
@@ -46,6 +55,11 @@ const checkFavoriteStatus = () => {
     console.error('Failed to check favoutire status of movie:', err)
   }
 };
+
+const setTrailerUrl = () => {
+  if (!props.movie?.id) return
+  trailerUrl.value = props.movie.trailerUrl;
+}
 
 const handleToggleFav = async () => {
   if (!props.movie?.id) return
@@ -57,16 +71,17 @@ const handleToggleFav = async () => {
   }
 };
 
-
 watch(() => props.movie, (newMovie) => {
   if (newMovie) {
     checkFavoriteStatus();
+    setTrailerUrl();
   }
 }, { immediate: true });
+
 </script>
 
 <template>
-  <div class="movie-card" :class="{ 'movie-card--search': forSearch, 'movie-card--view': forView }" v-if="movie">
+  <div class="movie-card" v-if="movie">
     <div class="movie-card__content">
       <span class="movie-card__labels">
         <span class="movie-card__rating" :class="getRatingClass(movie?.tmdbRating)">
@@ -84,7 +99,7 @@ watch(() => props.movie, (newMovie) => {
       <h2 class="movie-card__title">{{ movie?.title }}</h2>
       <p class="movie-card__plot">{{ movie?.plot }}</p>
       <div class="movie-card__btns">
-        <button class="btn btn--primary" type="button">Трейлер</button>
+        <button class="btn btn--primary" type="button" @click="openTrailer">Трейлер</button>
         <RouterLink class="btn btn--secondary btn--random" :to="`/movie/${movie?.id}`">О фильме</RouterLink>
         <button class="btn btn--secondary btn--icon" type="button" @click="handleToggleFav">
           <svg class="movie-card__icon" width="24" height="24" aria-hidden="true" v-if="!isFav">

@@ -4,11 +4,12 @@ import AppFooter from './components/AppFooter.vue';
 import AuthModal from '@/components/AuthModal.vue';
 import RegistrationModal from '@/components/RegistrationModal.vue';
 import SuccessModal from '@/components/SuccessModal.vue';
+import TrailerModal from './components/TrailerModal.vue';
 import { useModalStore } from '@/stores/modal'
 import { storeToRefs } from 'pinia'
 
 const modalStore = useModalStore();
-const { authModal, registrationModal, successModal } = storeToRefs(modalStore);
+const { authModal, registrationModal, successModal, trailerModal } = storeToRefs(modalStore);
 
 </script>
 
@@ -19,4 +20,5 @@ const { authModal, registrationModal, successModal } = storeToRefs(modalStore);
   <AuthModal v-model="authModal" />
   <RegistrationModal v-model="registrationModal" />
   <SuccessModal v-model="successModal" />
+  <TrailerModal v-model="trailerModal" />
 </template>
