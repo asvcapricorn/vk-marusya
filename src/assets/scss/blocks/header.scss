@@ -2,7 +2,37 @@
 @use '../global/mixins' as *;
 
 .header {
+  $root: &;
   padding: 24px 0;
+  position: relative;
+
+  &--search-open {
+    @include vp-767 {
+      height: 88px;
+      background-color: $color-black-50;
+
+      #{$root}__logo,
+      #{$root}__link,
+      #{$root}__btn,
+      #{$root}__right {
+        display: none;
+      }
+
+      #{$root}__search-form {
+        width: 90%;
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 20;
+      }
+
+      #{$root}__search-overlay {
+        display: block;
+      }
+    }
+  }
 
   &__wrapper {
     display: grid;
@@ -139,12 +169,6 @@
   }
 
   &__search-form {
-    &--mobile-show {
-      @include vp-767 {
-        display: block;
-      }
-    }
-
     @include vp-767 {
       display: none;
     }
@@ -168,5 +192,16 @@
     @include vp-767 {
       display: block;
     }
+  }
+
+  &__search-overlay {
+    display: none;
+    background-color: $color-black-50;
+    width: 100%;
+    height: calc(100vh - 88px);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
   }
 }

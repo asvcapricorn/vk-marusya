@@ -7,6 +7,7 @@ const props = defineProps<{ modelValue: string, searchResults: IMovie[] | null }
 const emit = defineEmits(['update:modelValue']);
 
 const isShow = ref(false);
+const formRef = ref<HTMLElement | null>(null);
 const searchResultsRef = ref<HTMLElement | null>(null);
 
 watch(
@@ -18,7 +19,8 @@ watch(
 );
 
 const handleClickOutside = (event: MouseEvent) => {
-    if (searchResultsRef.value && !searchResultsRef.value.contains(event.target as Node)) {
+    if ((searchResultsRef.value && !searchResultsRef.value.contains(event.target as Node))
+        && (formRef.value && !formRef.value.contains(event.target as Node))) {
         isShow.value = false;
     }
 };
@@ -42,7 +44,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <form class="search-form" action="#">
+    <form class="search-form" action="#" ref="formRef">
         <div class="custom-input">
             <input class="custom-input__field" name="search" id="search" type="text" placeholder="Поиск"
                 :value="modelValue" @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)">

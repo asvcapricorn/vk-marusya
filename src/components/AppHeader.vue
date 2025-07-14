@@ -39,9 +39,10 @@ const getMovies = async (title: string): Promise<IResponseMovies> => {
   }
 };
 
-// const searchFromEl = ref();
+const headerRef = ref<HTMLElement | null>(null);
+
 const showSearch = () => {
-  console.log('show');
+  headerRef.value?.classList.add('header--search-open');
 }
 
 watch(search, async (newVal) => {
@@ -63,7 +64,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="header">
+  <header class="header" ref="headerRef">
     <div class="container">
       <div class="header__wrapper">
         <RouterLink class="header__logo" to="/">
@@ -84,8 +85,7 @@ onMounted(() => {
               </svg>
             </RouterLink>
             <div class="header__search">
-              <SearchForm class="header__search-form" v-model="search" :searchResults="searchResults"
-                ref="searchFormEl" />
+              <SearchForm class="header__search-form" v-model="search" :searchResults="searchResults" />
               <button class="header__btn btn btn--icon" @click="showSearch">
                 <svg class="header__link-icon" width="24" height="24" aria-hidden="true">
                   <use xlink:href="@/assets/images/sprite.svg#icon-search"></use>
@@ -114,6 +114,7 @@ onMounted(() => {
             </div>
           </div>
         </div>
+        <div class="header__search-overlay"></div>
       </div>
     </div>
   </header>

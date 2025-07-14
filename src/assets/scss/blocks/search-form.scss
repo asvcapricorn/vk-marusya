@@ -1,21 +1,22 @@
 @use '../global/variables.scss' as *;
+@use '../global/mixins.scss' as *;
 
 .search-form {
   width: 100%;
   position: relative;
 
   &__results {
+    display: flex;
+    flex-direction: column;
     padding: 8px;
     position: absolute;
     top: calc(100% + 12px);
     right: 0;
     width: 85%;
     margin: 0;
-    padding: 0;
     list-style-type: none;
     background-color: $color-onyx;
     border-radius: 8px;
-    z-index: 10;
 
     opacity: 0;
     transform: translateY(-10px);
@@ -24,7 +25,17 @@
       transform $transition-300;
     pointer-events: none;
 
-    &.search-form__results--show {
+    @include vp-767 {
+      flex-direction: row;
+      gap: 16px;
+      padding: 24px 20px;
+      left: 0;
+      right: auto;
+      top: calc(100% + 8px);
+      width: unset;
+    }
+
+    &--show {
       opacity: 1;
       transform: translateY(0);
       pointer-events: all;

@@ -14,6 +14,10 @@
     gap: 16px;
     justify-content: start;
 
+    .header--search-open & {
+      background-color: red;
+    }
+
     #{$root}__plot,
     #{$root}__btns {
       display: none;
@@ -49,6 +53,13 @@
       line-height: 20px;
     }
 
+    #{$root}__genres {
+      max-width: 230px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
     #{$root}__title {
       font-weight: 700;
       font-size: 18px;
@@ -64,10 +75,21 @@
     #{$root}__link-search {
       display: block;
       width: 100%;
-      height: 100px;
+      height: 100%;
       position: absolute;
       left: 0;
       top: 0;
+      border-radius: 6px;
+      transition: outline $transition-80;
+
+      &:hover {
+        outline: 1px solid $color-white-50;
+      }
+    }
+
+    #{$root}__icon-default {
+      width: 40px;
+      height: 40px;
     }
   }
 

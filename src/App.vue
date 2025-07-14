@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue';
+import { emitter } from '@/utils/index';
 import AppHeader from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
 import AuthModal from '@/components/AuthModal.vue';
@@ -11,6 +13,15 @@ import { storeToRefs } from 'pinia'
 const modalStore = useModalStore();
 const { authModal, registrationModal, successModal, trailerModal } = storeToRefs(modalStore);
 
+onMounted(() => {
+  emitter.on('auth:required', () => {
+    modalStore.openAuthModal();
+  });
+});
+
+onUnmounted(() => {
+  emitter.off('auth:required');
+});
 </script>
 
 <template>
