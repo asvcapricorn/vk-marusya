@@ -1,4 +1,5 @@
 @use '../global/variables' as *;
+@use '../global/mixins.scss' as *;
 
 .movie-card {
   $root: &;
@@ -15,7 +16,39 @@
     justify-content: start;
 
     .header--search-open & {
-      background-color: red;
+      @include vp-767 {
+        align-items: start;
+        width: 220px;
+        flex-direction: column-reverse;
+        padding: 0;
+        height: 100%;
+
+        #{$root}__content {
+          height: 100%;
+          justify-content: space-between;
+          gap: 5px;
+        }
+
+        #{$root}__labels {
+          flex-wrap: wrap;
+        }
+
+        #{$root}__genres {
+          max-width: unset;
+          white-space: initial;
+        }
+
+        #{$root}__image {
+          width: unset;
+          height: 206px;
+        }
+      }
+    }
+
+    #{$root}__content {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
     }
 
     #{$root}__plot,
@@ -24,14 +57,19 @@
     }
 
     #{$root}__labels {
+      display: grid;
+      grid-template-columns: 47px 33px 1fr 70px;
       gap: 12px;
-      align-items: center;
       margin: 0 0 8px;
+
+      @media (max-width: 900px) {
+        display: flex;
+      }
     }
 
     #{$root}__rating {
       gap: 4px;
-      padding: 5px 8px;
+      padding: 2px 8px;
       border-radius: 16px;
     }
 
@@ -54,10 +92,13 @@
     }
 
     #{$root}__genres {
-      max-width: 230px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+
+      @media (max-width: 900px) {
+        display: none;
+      }
     }
 
     #{$root}__title {

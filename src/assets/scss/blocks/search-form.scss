@@ -17,6 +17,7 @@
     list-style-type: none;
     background-color: $color-onyx;
     border-radius: 8px;
+    z-index: 10;
 
     opacity: 0;
     transform: translateY(-10px);
@@ -25,6 +26,10 @@
       transform $transition-300;
     pointer-events: none;
 
+    @media (max-width: 900px) {
+      width: 100%;
+    }
+
     @include vp-767 {
       flex-direction: row;
       gap: 16px;
@@ -32,7 +37,8 @@
       left: 0;
       right: auto;
       top: calc(100% + 8px);
-      width: unset;
+      overflow: auto;
+      margin: 0 -20px 0 0;
     }
 
     &--show {

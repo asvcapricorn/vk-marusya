@@ -46,6 +46,7 @@ export const useModalStore = defineStore('modal', () => {
       isBodyScrollLocked.value = true
     }
   }
+
   const unlockBodyScroll = () => {
     if (
       isBodyScrollLocked.value &&

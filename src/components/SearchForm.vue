@@ -4,7 +4,7 @@ import type { IMovie } from '../types/movie';
 import MovieCard from './MovieCard.vue';
 
 const props = defineProps<{ modelValue: string, searchResults: IMovie[] | null }>();
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'closeSearch']);
 
 const isShow = ref(false);
 const formRef = ref<HTMLElement | null>(null);
@@ -60,7 +60,7 @@ onUnmounted(() => {
         </div>
         <ul class="search-form__results" :class="{ 'search-form__results--show': isShow }" ref="searchResultsRef">
             <li class="search-form__result" v-for="movie in searchResults" :key="movie.id">
-                <MovieCard class="movie-card--search" :movie=movie @click="isShow = false" />
+                <MovieCard class="movie-card--search" :movie=movie @click="isShow = false, emit('closeSearch')" />
             </li>
         </ul>
     </form>

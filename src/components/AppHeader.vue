@@ -40,9 +40,16 @@ const getMovies = async (title: string): Promise<IResponseMovies> => {
 };
 
 const headerRef = ref<HTMLElement | null>(null);
+const body = document.body;
 
-const showSearch = () => {
-  headerRef.value?.classList.add('header--search-open');
+const toggleSearch = () => {
+  body.classList.toggle('body-no-scroll-search');
+  headerRef.value?.classList.toggle('header--search-open');
+}
+
+const closeSearch = () => {
+  body.classList.remove('body-no-scroll-search');
+  headerRef.value?.classList.remove('header--search-open');
 }
 
 watch(search, async (newVal) => {
@@ -60,7 +67,6 @@ onMounted(() => {
     userName.value = JSON.parse(userData).name;
   }
 });
-
 </script>
 
 <template>
@@ -85,8 +91,9 @@ onMounted(() => {
               </svg>
             </RouterLink>
             <div class="header__search">
-              <SearchForm class="header__search-form" v-model="search" :searchResults="searchResults" />
-              <button class="header__btn btn btn--icon" @click="showSearch">
+              <SearchForm class="header__search-form" v-model="search" :searchResults="searchResults"
+                @closeSearch="closeSearch" />
+              <button class="header__btn btn btn--icon" @click="toggleSearch">
                 <svg class="header__link-icon" width="24" height="24" aria-hidden="true">
                   <use xlink:href="@/assets/images/sprite.svg#icon-search"></use>
                 </svg>
@@ -114,7 +121,7 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div class="header__search-overlay"></div>
+        <div class="header__search-overlay" @click="toggleSearch"></div>
       </div>
     </div>
   </header>
