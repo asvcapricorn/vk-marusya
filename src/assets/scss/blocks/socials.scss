@@ -1,4 +1,5 @@
 @use '../global/variables.scss' as *;
+@use '../global/mixins.scss' as *;
 
 .socials {
   $root: &;
@@ -9,6 +10,10 @@
   justify-content: end;
   align-items: center;
   gap: 24px;
+
+  @include vp-767 {
+    justify-content: start;
+  }
 
   &__link {
     outline: none;
@@ -24,5 +29,12 @@
 
   &__link-icon {
     color: $color-white-80;
+    width: 36px;
+    height: 36px;
+
+    @include vp-767 {
+      width: 24px;
+      height: 24px;
+    }
   }
 }
