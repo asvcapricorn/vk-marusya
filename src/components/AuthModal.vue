@@ -39,8 +39,10 @@ const openRegistration = () => {
     <div class="modal-overlay" v-if="isOpen" @click.self="close()">
         <div class="modal">
             <picture class="modal__logo">
+                <source media="(max-width: 767px)"
+                    srcset="@/assets/images/logo-light-mobile.png 1x, @/assets/images/logo-light-mobile@2x.png 2x">
                 <img class="modal__image" src="@/assets/images/logo-light.png"
-                    srcset="@/assets/images/logo-light@2x.png 2x" height="35" width="157" alt="Логотип">
+                    srcset="@/assets/images/logo-light@2x.png 2x" height="35" width="157" alt="Логотип" loading="lazy">
             </picture>
             <form class="form auth-form">
                 <fieldset class="form__group">

@@ -9,6 +9,10 @@
   &--light {
     width: 340px;
 
+    @include vp-767 {
+      width: 295px;
+    }
+
     #{$root}__field {
       background-color: $color-white;
       border-color: $color-black-40;

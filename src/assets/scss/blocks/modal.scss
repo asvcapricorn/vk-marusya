@@ -1,4 +1,5 @@
 @use '../global/variables.scss' as *;
+@use '../global/mixins.scss' as *;
 
 .modal {
   position: fixed;
@@ -11,6 +12,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @include vp-767 {
+    padding: 64px 20px 16px;
+  }
 
   &--trailer {
     width: 960px;
@@ -55,6 +60,20 @@
     display: flex;
     justify-content: center;
     margin: 0 0 40px;
+
+    @include vp-767 {
+      margin: 0 0 32px;
+    }
+  }
+
+  &__image {
+    width: 157px;
+    height: 45px;
+
+    @include vp-767 {
+      width: 133px;
+      height: 30px;
+    }
   }
 
   &__title {
@@ -87,6 +106,11 @@
     top: 0;
     right: -72px;
     transition: background-color $transition-80;
+
+    @include vp-767 {
+      top: 8px;
+      right: 8px;
+    }
 
     &:hover,
     &:focus-visible {
