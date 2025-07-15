@@ -36,7 +36,7 @@ const openAuth = () => {
 </script>
 
 <template>
-    <div class="modal-overlay" v-if="isOpen" @click.self="close()">
+    <div class="modal-overlay" v-if="isOpen" @click.self="close()" @keyup.esc="close()">
         <div class="modal">
             <picture class="modal__logo">
                 <img class="modal__image" src="@/assets/images/logo-light.png"

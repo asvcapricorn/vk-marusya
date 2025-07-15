@@ -26,10 +26,10 @@ onUnmounted(() => {
 
 <template>
   <AppHeader />
-  <!-- <RouterView /> -->
+  <RouterView />
   <AppFooter />
   <AuthModal v-model="authModal" />
   <RegistrationModal v-model="registrationModal" />
   <SuccessModal v-model="successModal" />
-  <!-- <TrailerModal v-model="trailerModal" /> -->
+  <TrailerModal v-model="trailerModal" />
 </template>
