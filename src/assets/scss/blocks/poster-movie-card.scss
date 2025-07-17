@@ -16,6 +16,10 @@
     width: 224px;
   }
 
+  .movies-by-genre & {
+    width: 100%;
+  }
+
   &--fav {
     #{$root}__btn-delete {
       display: flex;
@@ -37,6 +41,11 @@
   &__image {
     width: 224px;
     height: 336px;
+  }
+
+  .movies-by-genre &__image {
+    width: 333px;
+    height: 500px;
   }
 
   &__icon {

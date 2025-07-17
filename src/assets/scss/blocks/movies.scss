@@ -38,9 +38,19 @@
     }
   }
 
+  .movies-by-genre &__list {
+    @media (max-width: 700px) {
+      overflow-x: hidden;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+    }
+  }
+
   &__item {
     display: flex;
     position: relative;
+    height: 336px;
     width: calc(20% - (40px * 4 / 5));
 
     @include vp-1023 {
@@ -69,6 +79,13 @@
       border-radius: 50px;
       z-index: 10;
       pointer-events: none;
+    }
+  }
+
+  .movies-by-genre &__item {
+    @media (max-width: 700px) {
+      height: 502px;
+      width: 100%;
     }
   }
 }
