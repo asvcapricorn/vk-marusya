@@ -4,9 +4,20 @@
 .movie-card {
   $root: &;
   display: grid;
-  grid-template-columns: 1fr 500px;
+  grid-template-columns: 1fr 450px;
+  gap: 40px;
   align-items: center;
   position: relative;
+
+  @include vp-1023 {
+    grid-template-columns: 1fr 380px;
+  }
+
+  @media (max-width: 900px) {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 24px;
+  }
 
   &--search {
     padding: 20px 8px;
@@ -57,7 +68,6 @@
     }
 
     #{$root}__labels {
-      display: grid;
       grid-template-columns: 47px 33px 1fr 70px;
       gap: 12px;
       margin: 0 0 8px;
@@ -141,16 +151,23 @@
   }
 
   &__labels {
-    display: flex;
+    display: grid;
+    grid-template-columns: 70px 42px auto 90px;
     gap: 16px;
     align-items: center;
+    justify-content: start;
     margin: 0 0 16px;
+
+    @include vp-767 {
+      grid-template-columns: 70px 33px auto 70px;
+      margin: 0 0 12px;
+    }
   }
 
   &__rating {
     display: flex;
     gap: 4px;
-    padding: 8px 12px;
+    padding: 4px 12px;
     border-radius: 16px;
     align-items: center;
 
@@ -183,6 +200,17 @@
     font-size: 18px;
     line-height: 24px;
     color: $color-white-70;
+
+    @include vp-767 {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
+  &__genres {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &__title {
@@ -190,23 +218,59 @@
     font-size: 48px;
     line-height: 56px;
     margin: 0 0 16px;
+
+    @include vp-1023 {
+      font-size: 38px;
+      line-height: 44px;
+    }
+
+    @include vp-767 {
+      font-size: 24px;
+      line-height: 32px;
+      margin: 0 0 12px;
+    }
   }
 
   &__plot {
     color: $color-white-70;
     margin: 0 0 60px;
+
+    @include vp-1023 {
+      font-size: 18px;
+      line-height: 24px;
+      margin: 0 0 32px;
+    }
   }
 
   &__btns {
     display: flex;
     gap: 16px;
     align-items: center;
+
+    @include vp-1023 {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      grid-template-rows: repeat(2, 1fr);
+    }
+  }
+
+  & .btn--primary {
+    grid-column: span 3;
   }
 
   &__image {
     object-fit: contain;
     height: 552px;
-    flex-shrink: 0;
+    width: 368px;
+
+    @media (max-width: 900px) {
+      height: 460px;
+      width: 307px;
+    }
+
+    @include vp-767 {
+      width: 100%;
+    }
   }
 
   &__icon-default {

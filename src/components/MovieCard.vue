@@ -116,7 +116,7 @@ watch(() => props.movie, (newMovie) => {
         </button>
       </div>
     </div>
-    <img class="movie-card__image" :src="movie?.posterUrl" height="552" width="680" alt="Постер фильма"
+    <img class="movie-card__image" :src="movie?.posterUrl" height="552" width="500" alt="Постер фильма"
       v-if="movie.posterUrl">
     <svg class="movie-card__icon-default" width="16" height="16" aria-hidden="true" v-else>
       <use xlink:href="@/assets/images/sprite.svg#icon-movie"></use>

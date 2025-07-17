@@ -8,7 +8,7 @@ import TopMovies from '@/components/TopMovies.vue';
     <div class="container">
       <h1 class="visually-hidden">Главная страница</h1>
       <RandomMovie />
-      <TopMovies />
+      <!-- <TopMovies /> -->
     </div>
   </main>
 </template>

@@ -1,6 +1,8 @@
 @use '../global/variables.scss' as *;
+@use '../global/mixins.scss' as *;
 
 .btn {
+  flex-shrink: 0;
   cursor: pointer;
   border: none;
   padding: 15px 47px;
@@ -14,6 +16,11 @@
   color: $color-white;
   outline: none;
   transition: opacity $transition-80;
+  text-align: center;
+
+  @include vp-767 {
+    padding: 15px 39px;
+  }
 
   &:hover,
   &:focus-visible {
