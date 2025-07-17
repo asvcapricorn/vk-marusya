@@ -12,6 +12,10 @@
   justify-content: center;
   outline: none;
 
+  @media (max-width: 700px) {
+    width: 224px;
+  }
+
   &--fav {
     #{$root}__btn-delete {
       display: flex;

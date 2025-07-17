@@ -21,6 +21,6 @@ onMounted(getTop10);
 <template>
     <section class="top">
         <h2 class="top__title">Топ 10 фильмов</h2>
-        <MoviesList class="movies-list--top" :movies="topMovies" />
+        <MoviesList class="movies--top" :movies="topMovies" />
     </section>
 </template>
