@@ -1,4 +1,5 @@
 @use '../global/variables.scss' as *;
+@use '../global/mixins.scss' as *;
 
 .profile {
   &__title {
@@ -6,6 +7,12 @@
     font-size: 48px;
     line-height: 56px;
     margin: 0 0 64px;
+
+    @include vp-767 {
+      font-size: 24px;
+      line-height: 32px;
+      margin: 0 0 40px;
+    }
   }
 
   &__switcher {
@@ -13,6 +20,11 @@
     gap: 64px;
     align-items: center;
     margin: 0 0 64px;
+
+    @include vp-767 {
+      gap: 24px;
+      margin: 0 0 40px;
+    }
   }
 
   &__link {
@@ -41,6 +53,20 @@
 
     &.router-link-active {
       &::after {
+        display: block;
+      }
+    }
+  }
+
+  &__link-title {
+    @include vp-767 {
+      display: none;
+    }
+
+    &--mobile {
+      display: none;
+
+      @include vp-767 {
         display: block;
       }
     }

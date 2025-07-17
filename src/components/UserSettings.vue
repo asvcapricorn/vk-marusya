@@ -45,31 +45,29 @@ const logout = async (): Promise<void> => {
 </script>
 
 <template>
-    <main>
-        <div class="settings">
-            <div class="settings__items">
-                <div class="settings__item">
-                    <div class="settings__icon-wrapper">
-                        <span class="settings__icon">{{ getInitials() }}</span>
-                    </div>
-                    <div class="settings__text">
-                        <div class="settings__label">Имя Фамилия</div>
-                        <div class="settings__value">{{ user }}</div>
-                    </div>
+    <div class="settings">
+        <div class="settings__items">
+            <div class="settings__item">
+                <div class="settings__icon-wrapper">
+                    <span class="settings__icon">{{ getInitials() }}</span>
                 </div>
-                <div class="settings__item">
-                    <div class="settings__icon-wrapper">
-                        <svg class="settings__icon" width="24" height="24" aria-hidden="true">
-                            <use xlink:href="@/assets/images/sprite.svg#icon-mail"></use>
-                        </svg>
-                    </div>
-                    <div class="settings__text">
-                        <div class="settings__label">Электронная почта</div>
-                        <div class="settings__value">{{ emailString }}</div>
-                    </div>
+                <div class="settings__text">
+                    <div class="settings__label">Имя Фамилия</div>
+                    <div class="settings__value">{{ user }}</div>
                 </div>
             </div>
-            <RouterLink class="btn btn--primary" @click="logout" to="/">Выйти из аккаунта</RouterLink>
+            <div class="settings__item">
+                <div class="settings__icon-wrapper">
+                    <svg class="settings__icon" width="24" height="24" aria-hidden="true">
+                        <use xlink:href="@/assets/images/sprite.svg#icon-mail"></use>
+                    </svg>
+                </div>
+                <div class="settings__text">
+                    <div class="settings__label">Электронная почта</div>
+                    <div class="settings__value">{{ emailString }}</div>
+                </div>
+            </div>
         </div>
-    </main>
+        <RouterLink class="settings__btn btn btn--primary" @click="logout" to="/">Выйти из аккаунта</RouterLink>
+    </div>
 </template>

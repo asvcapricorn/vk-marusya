@@ -1,4 +1,5 @@
 @use '../global/variables.scss' as *;
+@use '../global/mixins.scss' as *;
 
 .poster-movie-card {
   $root: &;
@@ -17,7 +18,9 @@
   }
 
   .movies-by-genre & {
-    width: 100%;
+    @media (max-width: 700px) {
+      width: 100%;
+    }
   }
 
   &--fav {
@@ -44,8 +47,10 @@
   }
 
   .movies-by-genre &__image {
-    width: 333px;
-    height: 500px;
+    @media (max-width: 700px) {
+      width: 333px;
+      height: 500px;
+    }
   }
 
   &__icon {

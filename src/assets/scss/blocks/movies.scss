@@ -23,7 +23,7 @@
     list-style: none;
     counter-reset: movie-counter;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: start;
 
     @include vp-1023 {
       gap: 40px;
@@ -34,7 +34,6 @@
       margin: -80px -20px;
       overflow-x: auto;
       flex-wrap: nowrap;
-      justify-content: start;
     }
   }
 
@@ -42,7 +41,6 @@
     @media (max-width: 700px) {
       overflow-x: hidden;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 24px;
     }
   }
@@ -85,7 +83,7 @@
   .movies-by-genre &__item {
     @media (max-width: 700px) {
       height: 502px;
-      width: 100%;
+      width: 335px;
     }
   }
 }
