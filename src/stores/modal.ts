@@ -3,7 +3,6 @@ import { defineStore } from 'pinia'
 
 export const useModalStore = defineStore('modal', () => {
   const body = document.body
-  const scrollbarWidth = ref(0)
 
   const authModal = ref(false)
   const registrationModal = ref(false)
@@ -40,8 +39,6 @@ export const useModalStore = defineStore('modal', () => {
 
   const lockBodyScroll = () => {
     if (!isBodyScrollLocked.value) {
-      scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth
-      body.style.paddingRight = `${scrollbarWidth.value}px`
       body.classList.add('body-no-scroll')
       isBodyScrollLocked.value = true
     }
@@ -56,7 +53,6 @@ export const useModalStore = defineStore('modal', () => {
       !trailerModal.value
     ) {
       body.classList.remove('body-no-scroll')
-      body.style.paddingRight = ''
       isBodyScrollLocked.value = false
     }
   }
