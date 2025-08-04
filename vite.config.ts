@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
   plugins: [vue(), vueDevTools()],
-  base: process.env.NODE_ENV === 'production' ? '/marusya/' : '/', //
+  base: process.env.NODE_ENV === 'production' ? '/vk-marusya/' : '/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
