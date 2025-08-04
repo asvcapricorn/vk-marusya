@@ -5,20 +5,18 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueDevTools(),
-  ],
+  plugins: [vue(), vueDevTools()],
+  base: process.env.NODE_ENV === 'production' ? '/marusya/' : '/', //
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "@/assets/scss/global/variables" as *;`
-      }
-    }
-  }
+        additionalData: `@use "@/assets/scss/global/variables" as *;`,
+      },
+    },
+  },
 })
