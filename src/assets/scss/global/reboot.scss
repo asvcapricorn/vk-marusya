@@ -18,7 +18,8 @@ body {
   color: $color-white;
   margin: 0;
   padding: 0;
-  background-color: $color-fog-of-war;
+  background-color: red;
+  // background-color: $color-fog-of-war;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
