@@ -19,4 +19,5 @@ export default defineConfig({
       },
     },
   },
+  assetsInclude: ['**/*.woff', '**/*.woff2'],
 })
