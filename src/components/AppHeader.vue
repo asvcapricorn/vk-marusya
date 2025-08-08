@@ -32,11 +32,16 @@ const getMovies = async (title: string): Promise<IResponseMovies> => {
     const resp = await api.get(`/movie?${query}`)
     const movies = await resp.data
 
+    if (!movies) {
+      throw new Error('Invalid response structure')
+    }
+
     return {
       movies: movies,
     }
   } catch (err) {
     console.error('movies response was not ok', err)
+    return { movies: [] }
   }
 }
 
