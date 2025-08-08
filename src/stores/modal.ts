@@ -10,7 +10,7 @@ export const useModalStore = defineStore('modal', () => {
   const trailerModal = ref(false)
   const isBodyScrollLocked = ref(false)
   const trailerUrl = ref('')
-  const scrollbarWidth = ref(0)
+  // const scrollbarWidth = ref(0)
 
   const openAuthModal = () => {
     authModal.value = true
@@ -40,8 +40,8 @@ export const useModalStore = defineStore('modal', () => {
 
   const lockBodyScroll = () => {
     if (!isBodyScrollLocked.value) {
-      scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth
-      body.style.paddingRight = `${scrollbarWidth.value}px`
+      // scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth
+      // body.style.paddingRight = `${scrollbarWidth.value}px`
 
       body.classList.add('body-no-scroll')
       isBodyScrollLocked.value = true
@@ -57,7 +57,7 @@ export const useModalStore = defineStore('modal', () => {
       !trailerModal.value
     ) {
       body.classList.remove('body-no-scroll')
-      body.style.paddingRight = ''
+      // body.style.paddingRight = ''
       isBodyScrollLocked.value = false
     }
   }
