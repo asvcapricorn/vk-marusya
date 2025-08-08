@@ -15,7 +15,6 @@ export const useFavStore = defineStore('fav', () => {
       return favMovies.value
     } catch (err) {
       console.error('Failed to fetch favorites:', err)
-      throw err
     }
   }
 
@@ -23,8 +22,10 @@ export const useFavStore = defineStore('fav', () => {
     try {
       await api.post('/favorites', { id: String(id) })
       await fetchFavMovies()
+      return true
     } catch (err) {
-      throw new Error('add to favourites response was not ok')
+      console.error('Failed to add to favorites:', err)
+      return false
     }
   }
 
@@ -32,8 +33,10 @@ export const useFavStore = defineStore('fav', () => {
     try {
       await api.delete(`/favorites/${id}`)
       await fetchFavMovies()
+      return true
     } catch (err) {
-      throw new Error('delete from favourites response was not ok')
+      console.error('Failed to delete from favorites:', err)
+      return false
     }
   }
 
@@ -42,16 +45,17 @@ export const useFavStore = defineStore('fav', () => {
   }
 
   const toggleFavorite = async (id: number) => {
+    let resp = false
     try {
       if (isFavorite(id)) {
-        await deleteFromFavs(id)
+        resp = await deleteFromFavs(id)
       } else {
-        await addToFavs(id)
+        resp = await addToFavs(id)
       }
     } catch (err) {
       console.error('Failed to toggle favorite:', err)
-      throw err
     }
+    return resp
   }
 
   return {

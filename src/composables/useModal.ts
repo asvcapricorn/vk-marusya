@@ -1,4 +1,4 @@
-import { computed, onMounted, onUnmounted, watch } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 
 export function useModal(
   props: { modelValue: boolean },
