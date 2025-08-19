@@ -1,6 +1,6 @@
-# VK-Marusya
+# Marusya
 
-Beta version of the popular streaming service VK Marusya. The application allows you to search for films, watch trailers and read information about them. Authorized users can add films to favorites so as not to forget to watch them.
+Стриминговый сервис «Маруся». Приложение позволяет искать фильмы и смотреть их трейлеры. Авторизованные пользователи могут добавлять фильмы в избранное. Проект написан на Vue и TypeScript с использованием Vue Router, Pinia, библиотек Axios, JustValidate, препроцессора SCSS и с помощью API Cinemaguide. В проекте также написаны unit-тесты, написанные с использованием Vitest и Vue Test Utils.
 
 ## Project Setup
 
@@ -18,10 +18,4 @@ npm run dev
 
 ```sh
 npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
 ```
