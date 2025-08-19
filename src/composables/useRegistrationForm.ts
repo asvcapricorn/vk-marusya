@@ -3,6 +3,7 @@ import JustValidate from 'just-validate'
 import api from '@/services/api'
 import type { IFields } from '@/types/validationFields'
 import { useModalStore } from '@/stores/modal'
+import { handleAxiosError } from '@/utils'
 
 export function useRegistrationForm(closeModal: () => void) {
   const email = ref('')
@@ -32,10 +33,7 @@ export function useRegistrationForm(closeModal: () => void) {
       openSuccess()
       formEl?.classList.remove('form--error')
     } catch (err) {
-      console.log('formEl', formEl)
-      formEl?.classList.add('form--error')
-      console.error('Registration error:', err)
-      throw new Error('Registration failed')
+      handleAxiosError(err)
     }
   }
 

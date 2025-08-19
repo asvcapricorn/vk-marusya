@@ -2,6 +2,7 @@
 import api from '@/services/api'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
+import { handleAxiosError } from '@/utils'
 
 const userStore = useUserStore()
 const { isAuthorized, userEmail, userName, userSurname } = storeToRefs(userStore)
@@ -21,7 +22,7 @@ if (userData) {
     user = nameString + ' ' + surnameString
     emailString = parsedUser.email || ''
   } catch (err) {
-    console.error('An error occurred while parsing JSON:', err)
+    handleAxiosError(err)
   }
 }
 
@@ -42,7 +43,7 @@ const logout = async (): Promise<void> => {
 
     localStorage.removeItem('user')
   } catch (err) {
-    console.error('logout data response was not ok:', err)
+    handleAxiosError(err)
   }
 }
 </script>
@@ -71,8 +72,6 @@ const logout = async (): Promise<void> => {
         </div>
       </div>
     </div>
-    <RouterLink class="settings__btn btn btn--primary" @click="logout" to="/"
-      >Выйти из аккаунта</RouterLink
-    >
+    <RouterLink class="settings__btn btn btn--primary" @click="logout" to="/">Выйти из аккаунта</RouterLink>
   </div>
 </template>

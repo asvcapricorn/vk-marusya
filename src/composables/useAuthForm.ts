@@ -4,6 +4,7 @@ import api from '@/services/api'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import type { IFields } from '@/types/validationFields'
+import { handleAxiosError } from '@/utils'
 
 export function useAuthForm(closeModal: () => void) {
   const userStore = useUserStore()
@@ -34,13 +35,11 @@ export function useAuthForm(closeModal: () => void) {
 
         localStorage.setItem('user', JSON.stringify(data))
       } catch (err) {
-        console.error('Profile error:', err)
-        throw new Error('Profile failed')
+        handleAxiosError(err)
       }
     } catch (err) {
       formEl?.classList.add('form--error')
-      console.error('Login error:', err)
-      throw new Error('Login failed')
+      handleAxiosError(err)
     }
   }
 

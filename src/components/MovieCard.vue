@@ -6,6 +6,7 @@ import { GENRE_MAP } from '@/constants/genres'
 import { useFavStore } from '@/stores/favourites'
 import { useModalStore } from '@/stores/modal'
 import { storeToRefs } from 'pinia'
+import { emitter } from '@/utils/index'
 
 const props = defineProps<{ movie: IMovie | null }>()
 
@@ -49,11 +50,7 @@ const openTrailer = () => {
 
 const checkFavoriteStatus = () => {
   if (!props.movie?.id) return
-  try {
-    isFav.value = favStore.isFavorite(props.movie.id)
-  } catch (err) {
-    console.error('Failed to check favoutire status of movie:', err)
-  }
+  isFav.value = favStore.isFavorite(props.movie.id);
 }
 
 const setTrailerUrl = () => {
@@ -62,14 +59,15 @@ const setTrailerUrl = () => {
 }
 
 const handleToggleFav = async () => {
+  const userData = localStorage.getItem('user');
   if (!props.movie?.id) return
-  try {
-    const resp = await favStore.toggleFavorite(props.movie.id)
-    if (resp) {
-      isFav.value = !isFav.value
-    }
-  } catch (err) {
-    console.error('Failed to toggle favourite:', err)
+  if (!userData) {
+    emitter.emit('auth:required');
+    return;
+  }
+  const resp = await favStore.toggleFavorite(props.movie.id);
+  if (resp) {
+    isFav.value = !isFav.value;
   }
 }
 
@@ -105,9 +103,7 @@ watch(
       <p class="movie-card__plot">{{ movie?.plot }}</p>
       <div class="movie-card__btns">
         <button class="btn btn--primary" type="button" @click="openTrailer">Трейлер</button>
-        <RouterLink class="btn btn--secondary btn--random" :to="`/movie/${movie?.id}`"
-          >О фильме</RouterLink
-        >
+        <RouterLink class="btn btn--secondary btn--random" :to="`/movie/${movie?.id}`">О фильме</RouterLink>
         <button class="btn btn--secondary btn--icon" type="button" @click="handleToggleFav">
           <svg class="movie-card__icon" width="24" height="24" aria-hidden="true" v-if="!isFav">
             <use xlink:href="@/assets/images/sprite.svg#icon-fav"></use>
@@ -116,25 +112,15 @@ watch(
             <use xlink:href="@/assets/images/sprite.svg#icon-fav-fill"></use>
           </svg>
         </button>
-        <button
-          class="btn btn--secondary btn--icon btn--random"
-          type="button"
-          @click="$emit('refreshMovie')"
-        >
+        <button class="btn btn--secondary btn--icon btn--random" type="button" @click="$emit('refreshMovie')">
           <svg class="movie-card__rating-icon" width="24" height="24" aria-hidden="true">
             <use xlink:href="@/assets/images/sprite.svg#icon-refresh"></use>
           </svg>
         </button>
       </div>
     </div>
-    <img
-      class="movie-card__image"
-      :src="movie?.posterUrl"
-      height="552"
-      width="500"
-      alt="Постер фильма"
-      v-if="movie.posterUrl"
-    />
+    <img class="movie-card__image" :src="movie?.posterUrl" height="552" width="500" alt="Постер фильма"
+      v-if="movie.posterUrl" />
     <svg class="movie-card__icon-default" width="16" height="16" aria-hidden="true" v-else>
       <use xlink:href="@/assets/images/sprite.svg#icon-movie"></use>
     </svg>

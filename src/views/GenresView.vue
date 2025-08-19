@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import api from '@/services/api';
 import GenreCard from '../components/GenreCard.vue';
 import type { GenreKey } from '@/constants/genres';
+import { handleAxiosError } from '@/utils'
 
 const genres = ref<GenreKey[] | null>(null);
 
@@ -11,7 +12,7 @@ const getGenres = async (): Promise<void> => {
     const resp = await api.get('/movie/genres');
     genres.value = await resp.data;
   } catch (err) {
-    throw new Error('genres response was not ok')
+    handleAxiosError(err)
   }
 };
 

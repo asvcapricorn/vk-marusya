@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import api from '@/services/api'
 import type { IMovie } from '../types/movie'
+import { handleAxiosError } from '@/utils'
 
 export const useFavStore = defineStore('fav', () => {
   const favIds = ref<number[]>([])
@@ -14,7 +15,9 @@ export const useFavStore = defineStore('fav', () => {
       favIds.value = response.data.map((movie: IMovie) => movie.id)
       return favMovies.value
     } catch (err) {
-      console.error('Failed to fetch favorites:', err)
+      handleAxiosError(err)
+      favMovies.value = []
+      return favMovies.value
     }
   }
 
@@ -24,7 +27,7 @@ export const useFavStore = defineStore('fav', () => {
       await fetchFavMovies()
       return true
     } catch (err) {
-      console.error('Failed to add to favorites:', err)
+      handleAxiosError(err)
       return false
     }
   }
@@ -35,7 +38,7 @@ export const useFavStore = defineStore('fav', () => {
       await fetchFavMovies()
       return true
     } catch (err) {
-      console.error('Failed to delete from favorites:', err)
+      handleAxiosError(err)
       return false
     }
   }
@@ -45,17 +48,7 @@ export const useFavStore = defineStore('fav', () => {
   }
 
   const toggleFavorite = async (id: number) => {
-    let resp = false
-    try {
-      if (isFavorite(id)) {
-        resp = await deleteFromFavs(id)
-      } else {
-        resp = await addToFavs(id)
-      }
-    } catch (err) {
-      console.error('Failed to toggle favorite:', err)
-    }
-    return resp
+    return isFavorite(id) ? await deleteFromFavs(id) : await addToFavs(id)
   }
 
   return {

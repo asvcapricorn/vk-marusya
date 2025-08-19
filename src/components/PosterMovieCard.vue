@@ -7,12 +7,7 @@ const favStore = useFavStore();
 
 const handleDelete = async () => {
   if (!props.movie?.id) return
-
-  try {
-    await favStore.deleteFromFavs(props.movie.id);
-  } catch (err) {
-    console.error('Failed to remove from favorites:', err)
-  }
+  await favStore.deleteFromFavs(props.movie.id);
 }
 </script>
 

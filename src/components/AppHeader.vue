@@ -6,7 +6,7 @@ import SearchForm from './SearchForm.vue'
 import { useUserStore } from '@/stores/user'
 import { useModalStore } from '@/stores/modal'
 import { storeToRefs } from 'pinia'
-import { debounce } from '@/utils'
+import { debounce, handleAxiosError } from '@/utils'
 
 const search = ref('')
 const searchResults = ref<IMovie[]>([])
@@ -27,23 +27,22 @@ const getMovies = async (title: string): Promise<IResponseMovies> => {
   try {
     const query = new URLSearchParams({
       title: title,
-      count: String(5),
+      count: String(5)
     })
-    const resp = await api.get(`/movie?${query}`)
-    const movies = await resp.data
-
-    if (!movies) {
-      throw new Error('Invalid response structure')
-    }
+    const resp = await api.get(`/movie?${query}`);
+    const movies = await resp.data;
 
     return {
-      movies: movies,
+      movies: movies
     }
   } catch (err) {
-    console.error('movies response was not ok', err)
-    return { movies: [] }
+    handleAxiosError(err);
+    return {
+      movies: []
+    }
   }
-}
+};
+
 
 const headerRef = ref<HTMLElement | null>(null)
 const body = document.body
@@ -89,19 +88,10 @@ onMounted(() => {
       <div class="header__wrapper">
         <RouterLink class="header__logo" to="/">
           <picture class="header__picture">
-            <source
-              media="(max-width: 767px)"
-              srcset="@/assets/images/logo-mobile.png 1x, @/assets/images/logo-mobile@2x.png 2x"
-            />
-            <img
-              class="header__image"
-              src="@/assets/images/logo.png"
-              srcset="@/assets/images/logo@2x.png 2x"
-              height="32"
-              width="144"
-              alt="Логотип"
-              loading="lazy"
-            />
+            <source media="(max-width: 767px)"
+              srcset="@/assets/images/logo-mobile.png 1x, @/assets/images/logo-mobile@2x.png 2x" />
+            <img class="header__image" src="@/assets/images/logo.png" srcset="@/assets/images/logo@2x.png 2x"
+              height="32" width="144" alt="Логотип" loading="lazy" />
           </picture>
         </RouterLink>
         <div class="header__content">
@@ -114,12 +104,8 @@ onMounted(() => {
               </svg>
             </RouterLink>
             <div class="header__search">
-              <SearchForm
-                class="header__search-form"
-                v-model="search"
-                :searchResults="searchResults"
-                @closeSearch="closeSearch"
-              />
+              <SearchForm class="header__search-form" v-model="search" :searchResults="searchResults"
+                @closeSearch="closeSearch" />
               <button class="header__btn btn btn--icon" @click="toggleSearch">
                 <svg class="header__link-icon" width="24" height="24" aria-hidden="true">
                   <use xlink:href="@/assets/images/sprite.svg#icon-search"></use>
@@ -132,12 +118,7 @@ onMounted(() => {
               <RouterLink class="header__link header__link--profile" to="/profile" v-if="userName">
                 {{ userName }}
               </RouterLink>
-              <button
-                class="header__link header__link--profile"
-                type="button"
-                @click="openAuth"
-                v-else
-              >
+              <button class="header__link header__link--profile" type="button" @click="openAuth" v-else>
                 Войти
               </button>
             </div>
@@ -147,12 +128,7 @@ onMounted(() => {
                   <use xlink:href="@/assets/images/sprite.svg#icon-user"></use>
                 </svg>
               </RouterLink>
-              <button
-                class="header__link header__link--profile"
-                type="button"
-                @click="openAuth"
-                v-else
-              >
+              <button class="header__link header__link--profile" type="button" @click="openAuth" v-else>
                 <svg class="header__link-icon" width="24" height="24" aria-hidden="true">
                   <use xlink:href="@/assets/images/sprite.svg#icon-user"></use>
                 </svg>

@@ -8,17 +8,13 @@ const favStore = useFavStore();
 const { favMovies } = storeToRefs(favStore);
 
 onMounted(async () => {
-    try {
-        await favStore.fetchFavMovies()
-    } catch (err) {
-        console.error('Failed to load favorites:', err)
-    }
+  await favStore.fetchFavMovies();
 })
 
 </script>
 <template>
-    <section class="favourites">
-        <MoviesList :movies="favMovies" :cardTop="true" :isFav="true" v-if="favMovies && favMovies.length" />
-        <span class="favourites__text" v-else>Вы пока не добавили ни одного фильма в избранное</span>
-    </section>
+  <section class="favourites">
+    <MoviesList :movies="favMovies" :cardTop="true" :isFav="true" v-if="favMovies && favMovies.length" />
+    <span class="favourites__text" v-else>Вы пока не добавили ни одного фильма в избранное</span>
+  </section>
 </template>

@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import api from '@/services/api';
 import MovieCard from './MovieCard.vue';
 import type { IMovie } from '../types/movie';
+import { handleAxiosError } from '@/utils'
 
 const movie = ref<IMovie | null>(null);
 
@@ -11,7 +12,7 @@ const getRandomMovie = async (): Promise<void> => {
     const resp = await api.get('/movie/random');
     movie.value = await resp.data;
   } catch (err) {
-    throw new Error('random movie response was not ok')
+    handleAxiosError(err)
   }
 };
 
